@@ -2,13 +2,13 @@ import { describe, expect, it } from 'vitest'
 import { toTailwindcss } from '../src/toTailwindcss'
 describe('font-size', () => {
   it('rem', () => {
-    expect(toTailwindcss('font-size: 1.5rem')).toBe('text-1.5rem')
+    expect(toTailwindcss('font-size: 1.5rem')).toBe('text-[1.5rem]')
   })
   it('em', () => {
-    expect(toTailwindcss('font-size: 1.25em')).toBe('text-1.25em')
+    expect(toTailwindcss('font-size: 1.25em')).toBe('text-[1.25em]')
   })
   it('px', () => {
-    expect(toTailwindcss('font-size: 10px')).toBe('text-10px')
+    expect(toTailwindcss('font-size: 10px')).toBe('text-[10px]')
   })
 })
 

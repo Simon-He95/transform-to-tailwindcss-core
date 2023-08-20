@@ -1,10 +1,10 @@
-import { transformImportant } from './utils'
+import { getVal, transformImportant } from './utils'
 
 export function font(key: string, val: string) {
   const [value, important] = transformImportant(val)
 
   if (key === 'font-size')
-    return `${important}text-${value}`
+    return `${important}text${getVal(value)}`
   if (key === 'font-weight')
     return `${important}font-${value}`
   if (key === 'font-family') {
