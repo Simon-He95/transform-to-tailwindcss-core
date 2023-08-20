@@ -122,7 +122,8 @@ const splitReg = /([\w-]+)\s*:\s*([.\w\(\)-\s%+'",#\/!]+)/
 
 export function toTailwindcss(css: String) {
   const match = css.match(splitReg)
-  if (!match) return
+  if (!match)
+    return
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, key, val] = match
   const first = getFirstName(key)

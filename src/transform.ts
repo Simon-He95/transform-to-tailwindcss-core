@@ -9,14 +9,17 @@ import {
 
 export function transform(key: string, val: string) {
   const [v, important] = transformImportant(val)
-  if (key === 'transform-origin') return `${important}origin-${joinWithLine(v)}`
-  if (key === 'transform-style') return `${important}transform-${v}`
+  if (key === 'transform-origin')
+    return `${important}origin-${joinWithLine(v)}`
+  if (key === 'transform-style')
+    return `${important}transform-${v}`
 
   return joinEmpty(v)
     .split(' ')
     .map((v) => {
       const matcher = v.match(/([a-z]+)([A-Z])?\((.*)\)/)
-      if (!matcher) return undefined
+      if (!matcher)
+        return undefined
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, namePrefix, nameSuffix, value] = matcher
       if (nameSuffix) {
@@ -33,7 +36,8 @@ export function transform(key: string, val: string) {
         return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${getVal(
           trim(value, 'all'),
         )}`
-      } else {
+      }
+      else {
         if (namePrefix === 'scale') {
           if (value.includes(','))
             return `${important}${namePrefix}-[${value.split(',').join('_')}]`

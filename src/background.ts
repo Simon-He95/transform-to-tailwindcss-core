@@ -7,11 +7,11 @@ const backgroundMap = [
   'background-position',
   'background-image',
 ]
-const linearGradientReg =
-  /linear-gradient\(\s*to([\w\s]+),?([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
+const linearGradientReg
+  = /linear-gradient\(\s*to([\w\s]+),?([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
 
-const otherGradientReg =
-  /(radial|conic)-gradient\(([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
+const otherGradientReg
+  = /(radial|conic)-gradient\(([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
 
 const commaReplacer = '__comma__'
 
@@ -30,14 +30,15 @@ export function background(key: string, val: string) {
       )
 
       const matcher = newValue.match(linearGradientReg)
-      if (!matcher) return
+      if (!matcher)
+        return
 
       // eslint-disable-next-line prefer-const
       let [direction, from, via, to] = matcher.slice(1)
 
       direction = trim(direction, 'around')
         .split(' ')
-        .map((item) => item[0])
+        .map(item => item[0])
         .join('')
 
       return direction
@@ -47,14 +48,16 @@ export function background(key: string, val: string) {
             to,
           )}`
         : getLinearGradientPosition(from, via, to)
-    } else if (/(radial|conic)-gradient/.test(value)) {
+    }
+    else if (/(radial|conic)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
       const newValue = value.replace(/rgba?\(([\w\s,]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
       )
 
       const matcher = newValue.match(otherGradientReg)
-      if (!matcher) return
+      if (!matcher)
+        return
 
       // eslint-ignore @typescript-eslint/no-non-null-assertion
       const name = matcher[1]
@@ -79,9 +82,10 @@ export function background(key: string, val: string) {
 
     return value
       .split(' ')
-      .map((v) => `${important}bg-${v}`)
+      .map(v => `${important}bg-${v}`)
       .join(' ')
-  } else if (key === 'background-blend-mode') {
+  }
+  else if (key === 'background-blend-mode') {
     return `${important}bg-blend-${value}`
   }
 
@@ -89,14 +93,17 @@ export function background(key: string, val: string) {
 }
 
 function replaceBackground(s: string, val: string) {
-  if (val.endsWith('repeat')) return 'bg'
+  if (val.endsWith('repeat'))
+    return 'bg'
   return s.replace('background', 'bg')
 }
 
 function transformBox(s: string) {
   const reg = /(border)|(content)|(padding)-box/
-  if (reg.test(s)) return s.replace('-box', '')
-  if (s.startsWith('repeat-')) return s.replace('repeat-', '')
+  if (reg.test(s))
+    return s.replace('-box', '')
+  if (s.startsWith('repeat-'))
+    return s.replace('repeat-', '')
   return transformSpaceToLine(s)
 }
 
@@ -121,7 +128,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
       result += ` from-${
         isRgb(fromColor) ? `[${fromColor}]` : fromColor
       } from-${fromPosition}`
-    } else if (fromColor) {
+    }
+    else if (fromColor) {
       result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor}`
     }
   }
@@ -137,7 +145,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
       result += ` via-${
         isRgb(viaColor) ? `[${viaColor}]` : viaColor
       } via-${viaPosition}`
-    } else if (viaColor) {
+    }
+    else if (viaColor) {
       result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor}`
     }
   }
@@ -153,7 +162,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
       result += ` to-${
         isRgb(toColor) ? `[${toColor}]` : toColor
       } to-${toPosition}`
-    } else if (toColor) {
+    }
+    else if (toColor) {
       result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor}`
     }
   }

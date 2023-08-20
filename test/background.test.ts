@@ -109,8 +109,8 @@ describe('background', () => {
     expect(toTailwindcss('background-image:none')).toBe('bg-none')
   })
 
-  it("background-image:url('picture.png')", () => {
-    expect(toTailwindcss("background-image:url('picture.png')")).toBe(
+  it('background-image:url(\'picture.png\')', () => {
+    expect(toTailwindcss('background-image:url(\'picture.png\')')).toBe(
       'bg-[url(picture.png)]',
     )
   })

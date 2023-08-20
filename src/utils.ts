@@ -45,15 +45,15 @@ export function isDeg(s: string) {
 
 export function getVal(val: string, transform?: Function) {
   if (
-    isDeg(val) ||
-    isEm(val) ||
-    isEm(val) ||
-    isPx(val) ||
-    isCalc(val) ||
-    isUrl(val) ||
-    isHex(val) ||
-    isRgb(val) ||
-    isPercent(val)
+    isDeg(val)
+    || isEm(val)
+    || isEm(val)
+    || isPx(val)
+    || isCalc(val)
+    || isUrl(val)
+    || isHex(val)
+    || isRgb(val)
+    || isPercent(val)
   )
     return `-[${trim(val, 'all').replace(/['"]/g, '')}]`
   return `-${transform ? transform(val) : val}`
@@ -80,10 +80,14 @@ export type TrimType = 'all' | 'pre' | 'around' | 'post'
  * @returns
  */
 export function trim(s: string, type: TrimType = 'around'): string {
-  if (type === 'pre') return s.replace(/(^\s*)/g, '')
-  if (type === 'post') return s.replace(/(\s*$)/g, '')
-  if (type === 'all') return s.replace(/\s+/g, '')
-  if (type === 'around') return s.replace(/(^\s*)|(\s*$)/g, '')
+  if (type === 'pre')
+    return s.replace(/(^\s*)/g, '')
+  if (type === 'post')
+    return s.replace(/(\s*$)/g, '')
+  if (type === 'all')
+    return s.replace(/\s+/g, '')
+  if (type === 'around')
+    return s.replace(/(^\s*)|(\s*$)/g, '')
   return s
 }
 

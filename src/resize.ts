@@ -7,6 +7,7 @@ const map: any = {
 export function resize(key: string, val: string) {
   const [value, important] = transformImportant(val)
 
-  if (value === 'both') return `${important}${key}`
+  if (value === 'both')
+    return `${important}${key}`
   return `${important}${key}-${map[value] || value}`
 }

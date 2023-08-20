@@ -4,11 +4,13 @@ export function text(key: string, val: string) {
   const [value, important] = transformImportant(val)
 
   if (key === 'text-decoration-line') {
-    if (value === 'none') return `${important}no-underline`
+    if (value === 'none')
+      return `${important}no-underline`
     return `${important}${value}`
   }
   if (key === 'text-transform') {
-    if (value === 'none') return `${important}normal-case`
+    if (value === 'none')
+      return `${important}normal-case`
     return `${important}${value}`
   }
   if (key.startsWith('text-decoration') || key === 'text-indent')
@@ -16,5 +18,5 @@ export function text(key: string, val: string) {
 
   if (key === 'text-underline-offset')
     return `${important}underline-offset-${value}`
-  return `${important}text-${value}`
+  return `${important}text${getVal(value)}`
 }

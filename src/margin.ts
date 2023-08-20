@@ -14,11 +14,13 @@ export function transformMargin(key: string, val: string) {
 
   const specail = map[key]
 
-  if (specail) return `${important}${specail}${getVal(value)}`
+  if (specail)
+    return `${important}${specail}${getVal(value)}`
   const values = trim(value).split(' ')
   const len = values.length
 
-  if (len === 1) return `${important}${key[0]}${getVal(values[0])}`
+  if (len === 1)
+    return `${important}${key[0]}${getVal(values[0])}`
   if (len === 2) {
     return `${important}${key[0]}x${getVal(values[1])} ${important}${
       key[0]

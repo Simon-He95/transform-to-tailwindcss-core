@@ -11,7 +11,8 @@ export function transformStyleToTailwindcss(
       .filter(Boolean)
       .reduce((result, cur) => {
         const val = toTailwindcss(cur) || ''
-        if (!val) noTransfer.push(cur)
+        if (!val)
+          noTransfer.push(cur)
         return (result += `${val} `)
       }, '')
       .trim(),
