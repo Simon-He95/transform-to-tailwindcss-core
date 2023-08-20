@@ -130,8 +130,8 @@ export function toTailwindcss(css: String, isRem?: boolean) {
   const result = typeMap[first]?.(key, val)
   if (result && isRem) {
     return result.replace(
-      /-([0-9\.]+)px/,
-      (_: string, v: string) => `-${+v / 16}rem`,
+      /-\[([0-9\.]+)px\]/,
+      (_: string, v: string) => `-[${+v / 16}rem]`,
     )
   }
   return result

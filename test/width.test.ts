@@ -3,7 +3,7 @@ import { toTailwindcss } from '../src/toTailwindcss'
 
 describe('width', () => {
   it('px', () => {
-    expect(toTailwindcss('width:10px')).toBe('w-[10px]')
+    expect(toTailwindcss('width:10px', true)).toBe('w-[0.625rem]')
   })
   it('%', () => {
     expect(toTailwindcss('width: 100%')).toBe('w-[100%]')
