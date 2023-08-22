@@ -1,3 +1,5 @@
+import type { TrimType } from './type'
+
 export function isCalc(s: string) {
   return s.startsWith('calc(')
 }
@@ -70,8 +72,6 @@ export function joinWithLine(s: string) {
 export function joinWithUnderLine(s: string) {
   return s.replace(/\s+/, ' ').split(' ').join('_')
 }
-
-export type TrimType = 'all' | 'pre' | 'around' | 'post'
 
 /**
  * 删除空格
