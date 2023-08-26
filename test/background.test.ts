@@ -17,6 +17,12 @@ describe('background', () => {
     )
   })
 
+  it('background:rgba(125, 188, 234) center;', () => {
+    expect(toTailwindcss('background:rgba(125, 188, 234, 0.5) center')).toBe(
+      'bg-[rgba(125,188,234,0.5)] bg-center',
+    )
+  })
+
   it('background:red center no-repeat url("./xxx.jpg")', () => {
     expect(
       toTailwindcss('background:red center no-repeat url("./xxx.jpg")'),

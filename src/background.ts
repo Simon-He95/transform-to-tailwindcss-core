@@ -25,7 +25,7 @@ export function background(key: string, val: string) {
   if (key === 'background') {
     if (/(linear)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
-      const newValue = value.replace(/rgba?\(([\w\s,]+)\)/g, (all, v) =>
+      const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
       )
 
@@ -51,7 +51,7 @@ export function background(key: string, val: string) {
     }
     else if (/(radial|conic)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
-      const newValue = value.replace(/rgba?\(([\w\s,]+)\)/g, (all, v) =>
+      const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
       )
 
@@ -66,7 +66,8 @@ export function background(key: string, val: string) {
 
       return `bg-gradient-${name}${getLinearGradientPosition(from, via, to)}`
     }
-    const match = value.match(/rgba?\([\w,\s]+\)/)
+    const match = value.match(/rgba?\([^)]+\)/)
+    debugger
     if (match) {
       const rgb = match[0]
       value = value.replace(rgb, `[${trim(rgb, 'all')}]`)
@@ -120,7 +121,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
   if (from) {
     from = from.replaceAll(commaReplacer, ',')
     const [fromColor, fromPosition] = trim(from, 'around')
-      .replace(/rgba?\(([\w,\s]+)\)/, (all, v) =>
+      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
         all.replace(v, trim(v, 'all')),
       )
       .split(' ')
@@ -137,7 +138,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
   if (via) {
     via = via.replaceAll(commaReplacer, ',')
     const [viaColor, viaPosition] = trim(via, 'around')
-      .replace(/rgba?\(([\w,\s]+)\)/, (all, v) =>
+      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
         all.replace(v, trim(v, 'all')),
       )
       .split(' ')
@@ -154,7 +155,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
   if (to) {
     to = to.replaceAll(commaReplacer, ',')
     const [toColor, toPosition] = trim(to, 'around')
-      .replace(/rgba?\(([\w,\s]+)\)/, (all, v) =>
+      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
         all.replace(v, trim(v, 'all')),
       )
       .split(' ')
