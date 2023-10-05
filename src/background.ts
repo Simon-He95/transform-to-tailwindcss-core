@@ -67,7 +67,6 @@ export function background(key: string, val: string) {
       return `bg-gradient-${name}${getLinearGradientPosition(from, via, to)}`
     }
     const match = value.match(/rgba?\([^)]+\)/)
-    debugger
     if (match) {
       const rgb = match[0]
       value = value.replace(rgb, `[${trim(rgb, 'all')}]`)

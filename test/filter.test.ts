@@ -13,6 +13,10 @@ describe('filter', () => {
     expect(toTailwindcss('filter: brightness(.5);')).toBe('brightness-50')
   })
 
+  it('brightness', () => {
+    expect(toTailwindcss('filter: brightness(50%);')).toBe('brightness-50')
+  })
+
   it('contrast', () => {
     expect(toTailwindcss('filter: contrast(.5);')).toBe('contrast-50')
   })
