@@ -7,7 +7,7 @@ describe('border', () => {
 
   it('border;', () => {
     expect(toTailwindcss('border: 2px solid rgba(255, 62, 0, 0);')).toBe(
-      'border-[2px_solid_rgba(255,62,0,0)]',
+      'border-[2px] border-solid border-[rgba(255,62,0,0)]',
     )
   })
 

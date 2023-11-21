@@ -12,6 +12,7 @@ const borderSize = [
   'border-right',
   'border-bottom',
 ]
+
 export function border(key: string, val: string) {
   // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
@@ -49,5 +50,9 @@ export function border(key: string, val: string) {
     )
   }
 
-  return `${important}border-[${joinWithUnderLine(value)}]`
+  return value.split(' ').map((v) => {
+    if (value === 'currentColor')
+      return `${important}border-current`
+    return `${important}border${getVal(v)}`
+  }).join(' ')
 }
