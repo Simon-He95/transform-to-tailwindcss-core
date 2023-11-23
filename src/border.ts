@@ -3,7 +3,6 @@ import {
   isCalc,
   joinWithUnderLine,
   transformImportant,
-  trim,
 } from './utils'
 
 const borderSize = [
@@ -43,11 +42,6 @@ export function border(key: string, val: string) {
     if (value === 'currentColor')
       return `${important}border-current`
     return `${important}border${getVal(value)}`
-  }
-  if (/rgb/.test(value)) {
-    value = value.replace(/rgb[a](.*)/, (all, v) =>
-      all.replace(v, trim(v, 'all')),
-    )
   }
 
   return value.split(' ').map((v) => {

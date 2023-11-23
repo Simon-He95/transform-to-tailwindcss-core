@@ -29,6 +29,10 @@ export function isRgb(s: string) {
   return s.startsWith('rgb')
 }
 
+export function isHsl(s: string) {
+  return s.startsWith('hsl')
+}
+
 export function isPx(s: string) {
   return s.endsWith('px')
 }
@@ -55,7 +59,9 @@ export function getVal(val: string, transform?: Function) {
     || isUrl(val)
     || isHex(val)
     || isRgb(val)
+    || isHsl(val)
     || isPercent(val)
+    || isVar(val)
   )
     return `-[${trim(val, 'all').replace(/['"]/g, '')}]`
   return `-${transform ? transform(val) : val}`
@@ -94,6 +100,31 @@ export function trim(s: string, type: TrimType = 'around'): string {
 }
 
 export function transformImportant(v: string) {
+  v = v.replace(/\s+/, ' ')
+  if (/rgb/.test(v)) {
+    v = v.replace(/rgba?\(([^\)]+)\)/g, (all, k) => {
+      const _k = k.trim().split(' ')
+      return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
+    },
+    )
+  }
+
+  if (/hsl/.test(v)) {
+    v = v.replace(/hsla?\(([^\)]+)\)/g, (all, k) => {
+      const _k = k.trim().split(' ')
+      return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
+    },
+    )
+  }
+
+  if (/var\([^\)]+\)/.test(v)) {
+    v = v.replace(/var\(([^\)]+)\)/g, (all, k) => {
+      const _k = k.trim().split(' ')
+      return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
+    },
+    )
+  }
+
   if (v.endsWith('!important'))
     return [v.replace(/\s*\!important/, '').trim(), '!']
   return [v.trim(), '']
@@ -104,4 +135,8 @@ export function joinEmpty(str: string) {
     .replace(/\(\s*/g, '(')
     .replace(/\s*\)/g, ')')
     .replace(/\s*,\s*/g, ',')
+}
+
+export function isVar(s: string) {
+  return s.startsWith('var(--')
 }
