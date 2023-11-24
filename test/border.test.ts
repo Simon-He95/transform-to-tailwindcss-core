@@ -58,4 +58,8 @@ describe('border', () => {
   it('border-left-color: #333;', () => {
     expect(toTailwindcss('border-left-color: #333;')).toBe('border-l-[#333]')
   })
+
+  it('border-bottom: #333;', () => {
+    expect(toTailwindcss('border-bottom: 1px solid var(--default, red);')).toBe('border-b-[1px] border-b-solid border-b-[var(--default,red)]')
+  })
 })
