@@ -4,7 +4,6 @@ import {
   joinEmpty,
   joinWithLine,
   transformImportant,
-  trim,
 } from './utils'
 
 export function transform(key: string, val: string) {
@@ -34,7 +33,7 @@ export function transform(key: string, val: string) {
           )}`
         }
         return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${getVal(
-          trim(value, 'all'),
+          value,
         )}`
       }
       else {

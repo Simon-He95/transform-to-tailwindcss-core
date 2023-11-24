@@ -13,7 +13,7 @@ export function filter(key: string, val: string) {
     return `${important}${name}${getVal(getHundred(value).toString())}`
 
   if (name === 'drop-shadow')
-    return `${important}drop${getVal(box(name, value))}`
+    return `${important}drop-${box(name, value)}`
   if (percent.includes(name)) {
     return `${important}${name}${
       value.endsWith('%')

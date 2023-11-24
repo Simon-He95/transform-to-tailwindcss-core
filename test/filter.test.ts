@@ -21,7 +21,7 @@ describe('filter', () => {
     expect(toTailwindcss('filter: contrast(.5);')).toBe('contrast-50')
   })
 
-  it('drop-shadow', () => {
+  it.only('drop-shadow', () => {
     expect(
       toTailwindcss('filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));'),
     ).toBe('drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)]')

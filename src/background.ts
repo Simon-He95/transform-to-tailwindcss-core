@@ -1,4 +1,4 @@
-import { getVal, isRgb, transformImportant, trim } from './utils'
+import { getVal, isRgb, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
@@ -36,7 +36,7 @@ export function background(key: string, val: string) {
       // eslint-disable-next-line prefer-const
       let [direction, from, via, to] = matcher.slice(1)
 
-      direction = trim(direction, 'around')
+      direction = direction
         .split(' ')
         .map(item => item[0])
         .join('')
@@ -69,7 +69,7 @@ export function background(key: string, val: string) {
     const match = value.match(/rgba?\([^)]+\)/)
     if (match) {
       const rgb = match[0]
-      value = value.replace(rgb, `[${trim(rgb, 'all')}]`)
+      value = value.replace(rgb, `[${rgb}]`)
     }
     const urlMatch = value.match(/url\(["'\s\.\-_\w\/]*\)/)
 
@@ -119,11 +119,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
   }
   if (from) {
     from = from.replaceAll(commaReplacer, ',')
-    const [fromColor, fromPosition] = trim(from, 'around')
-      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
-        all.replace(v, trim(v, 'all')),
-      )
-      .split(' ')
+    const [fromColor, fromPosition] = from.split(' ')
     if (fromPosition) {
       result += ` from-${
         isRgb(fromColor) ? `[${fromColor}]` : fromColor
@@ -136,10 +132,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
 
   if (via) {
     via = via.replaceAll(commaReplacer, ',')
-    const [viaColor, viaPosition] = trim(via, 'around')
-      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
-        all.replace(v, trim(v, 'all')),
-      )
+    const [viaColor, viaPosition] = via
       .split(' ')
     if (viaPosition) {
       result += ` via-${
@@ -153,10 +146,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
 
   if (to) {
     to = to.replaceAll(commaReplacer, ',')
-    const [toColor, toPosition] = trim(to, 'around')
-      .replace(/rgba?\(([^\)]+)\)/, (all, v) =>
-        all.replace(v, trim(v, 'all')),
-      )
+    const [toColor, toPosition] = to
       .split(' ')
     if (toPosition) {
       result += ` to-${

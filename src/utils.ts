@@ -1,5 +1,8 @@
 import type { TrimType } from './type'
 
+export const cssMathFnRE = /^(?:calc|clamp|min|max)\s*\(.*\)/
+export const numberWithUnitRE = /[0-9]+(px|rem|em|%|vw|vh|vmin|vmax|deg)/
+
 export function isCalc(s: string) {
   return s.startsWith('calc(')
 }
@@ -33,34 +36,13 @@ export function isHsl(s: string) {
   return s.startsWith('hsl')
 }
 
-export function isPx(s: string) {
-  return s.endsWith('px')
-}
-
-export function isRem(s: string) {
-  return s.endsWith('rem')
-}
-
-export function isEm(s: string) {
-  return s.endsWith('em')
-}
-
-export function isDeg(s: string) {
-  return s.endsWith('deg')
-}
-
 export function getVal(val: string, transform?: Function) {
   if (
-    isDeg(val)
-    || isEm(val)
-    || isEm(val)
-    || isPx(val)
-    || isCalc(val)
-    || isUrl(val)
+    isUrl(val)
     || isHex(val)
     || isRgb(val)
     || isHsl(val)
-    || isPercent(val)
+    || isSize(val)
     || isVar(val)
   )
     return `-[${trim(val, 'all').replace(/['"]/g, '')}]`
@@ -101,6 +83,8 @@ export function trim(s: string, type: TrimType = 'around'): string {
 
 export function transformImportant(v: string) {
   v = v.replace(/\s+/, ' ')
+    .replace(/\s*,\s*/g, ',')
+    .replace(/\s*\/\s*/, '/')
   if (/rgb/.test(v)) {
     v = v.replace(/rgba?\(([^\)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
@@ -139,4 +123,12 @@ export function joinEmpty(str: string) {
 
 export function isVar(s: string) {
   return s.startsWith('var(--')
+}
+
+export function isSize(s: string) {
+  return cssMathFnRE.test(s) || numberWithUnitRE.test(s)
+}
+
+export function isColor(s: string) {
+  return isHex(s) || isRgb(s) || isHsl(s)
 }

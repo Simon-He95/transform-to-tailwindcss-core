@@ -1,4 +1,4 @@
-import { transformImportant, trim } from './utils'
+import { transformImportant } from './utils'
 const times = ['transition-delay', 'transition-duration']
 
 export function transition(key: string, val: string) {
@@ -6,7 +6,7 @@ export function transition(key: string, val: string) {
   if (key === 'transition-timing-function') {
     if (value === 'linear')
       return `${important}ease-${value}`
-    return `${important}ease-[${trim(value, 'all')}]`
+    return `${important}ease-[${value}]`
   }
   if (key === 'transition')
     return transformTransition(value, important)
