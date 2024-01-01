@@ -9,4 +9,8 @@ describe('content', () => {
   it('content: "aa";', () => {
     expect(toTailwindcss('content: "aa";')).toBe('content-["aa"]')
   })
+
+  it('content: " ";', () => {
+    expect(toTailwindcss('content: " ";')).toBe('content-[\'_\']')
+  })
 })

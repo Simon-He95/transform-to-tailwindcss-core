@@ -111,6 +111,7 @@ export function transformImportant(v: string) {
 
   if (v.endsWith('!important'))
     return [v.replace(/\s*\!important/, '').trim(), '!']
+
   return [v.trim(), '']
 }
 
