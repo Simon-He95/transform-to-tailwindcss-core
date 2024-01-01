@@ -13,4 +13,7 @@ describe('content', () => {
   it('content: " ";', () => {
     expect(toTailwindcss('content: " ";')).toBe('content-[\'_\']')
   })
+  it('content: \' \'', () => {
+    expect(toTailwindcss('content: \' \';')).toBe('content-[\'_\']')
+  })
 })
