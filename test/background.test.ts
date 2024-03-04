@@ -199,4 +199,11 @@ describe('background', () => {
       'bg-gradient-conic from-#fff from-0.25turn via-#000 via-0.25turn to-#fff to-0.5turn',
     )
   })
+  it('background: #eee', () => {
+    expect(
+      toTailwindcss(
+        'background: #eee',
+      ),
+    ).toBe('bg-[#eee]')
+  })
 })

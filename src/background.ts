@@ -82,7 +82,7 @@ export function background(key: string, val: string) {
 
     return value
       .split(' ')
-      .map(v => `${important}bg-${v}`)
+      .map(v => `${important}bg${getVal(v)}`)
       .join(' ')
   }
   else if (key === 'background-blend-mode') {
