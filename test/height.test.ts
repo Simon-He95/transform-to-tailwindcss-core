@@ -49,10 +49,38 @@ describe('height', () => {
   it('min-height: 0px;', () => {
     expect(toTailwindcss('min-height: 100%;;')).toBe('min-h-[100%]')
   })
+  it('min-height calc', () => {
+    expect(toTailwindcss(' min-height:calc(100% - 50px)')).toBe(
+      'min-h-[calc(100%-50px)]',
+    )
+  })
+  it('min-height calc not space', () => {
+    expect(toTailwindcss(' min-height:calc(100%-50px)')).toBe('min-h-[calc(100%-50px)]')
+  })
+
+  it('min-height calc space', () => {
+    expect(toTailwindcss(' min-height:calc(100%  -  50px)')).toBe(
+      'min-h-[calc(100%-50px)]',
+    )
+  })
   it('max-height: 0px;', () => {
     expect(toTailwindcss('max-height: 0px;')).toBe('max-h-[0px]')
   })
   it('max-height: 0px;', () => {
     expect(toTailwindcss('max-height: max-content;')).toBe('max-h-max')
+  })
+  it('max-height calc', () => {
+    expect(toTailwindcss(' max-height:calc(100% - 50px)')).toBe(
+      'max-h-[calc(100%-50px)]',
+    )
+  })
+  it('max-height calc not space', () => {
+    expect(toTailwindcss(' max-height:calc(100%-50px)')).toBe('max-h-[calc(100%-50px)]')
+  })
+
+  it('max-height calc space', () => {
+    expect(toTailwindcss(' max-height:calc(100%  -  50px)')).toBe(
+      'max-h-[calc(100%-50px)]',
+    )
   })
 })
