@@ -10,35 +10,35 @@ describe('filter', () => {
   })
 
   it('brightness', () => {
-    expect(toTailwindcss('filter: brightness(.5);')).toBe('brightness-50')
+    expect(toTailwindcss('filter: brightness(.5);')).toBe('brightness-[50%]')
   })
 
   it('brightness', () => {
-    expect(toTailwindcss('filter: brightness(50%);')).toBe('brightness-50')
+    expect(toTailwindcss('filter: brightness(50%);')).toBe('brightness-[50%]')
   })
 
   it('contrast', () => {
-    expect(toTailwindcss('filter: contrast(.5);')).toBe('contrast-50')
+    expect(toTailwindcss('filter: contrast(.5);')).toBe('contrast-[50%]')
   })
 
-  it.only('drop-shadow', () => {
+  it('drop-shadow', () => {
     expect(
       toTailwindcss('filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));'),
     ).toBe('drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)]')
   })
 
   it('grayscale 0.1', () => {
-    expect(toTailwindcss('filter: grayscale(0.1);')).toBe('grayscale-10')
+    expect(toTailwindcss('filter: grayscale(0.1);')).toBe('grayscale-[10%]')
   })
 
   it('grayscale %', () => {
-    expect(toTailwindcss('filter: grayscale(10%);')).toBe('grayscale-10')
+    expect(toTailwindcss('filter: grayscale(10%);')).toBe('grayscale-[10%]')
   })
   it('hue', () => {
     expect(toTailwindcss('filter: hue-rotate(0deg);')).toBe('hue-rotate-0')
   })
   it('invert', () => {
-    expect(toTailwindcss('filter: invert(0.1);')).toBe('invert-10')
+    expect(toTailwindcss('filter: invert(0.1);')).toBe('invert-[10%]')
   })
 
   it('saturate', () => {

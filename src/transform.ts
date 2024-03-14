@@ -1,6 +1,7 @@
 import {
   getHundred,
   getVal,
+  isVar,
   joinEmpty,
   joinWithLine,
   transformImportant,
@@ -22,27 +23,41 @@ export function transform(key: string, val: string) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, namePrefix, nameSuffix, value] = matcher
       if (nameSuffix) {
-        if (namePrefix === 'scale') {
-          if (value.includes(',')) {
-            return `${important}${namePrefix}-[${nameSuffix.toLowerCase()}-${value
-              .split(',')
-              .join('_')}]`
-          }
-          return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${getVal(
-            getHundred(value).toString(),
-          )}`
+        const values = value.replace(
+          /,(?![^()]*\))/g,
+          ' ',
+        ).split(' ')
+        if (values.length > 1) {
+          return `${important}${namePrefix}-[${nameSuffix.toLowerCase()}-${values.map((v) => {
+            return isVar(v)
+              ? v
+              : getVal(
+                namePrefix === 'scale' ? getHundred(v) : v,
+              )
+          }).join('_')}]`
         }
-        return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${getVal(
-          value,
-        )}`
+
+        return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${isVar(values[0])
+          ? `-[${values[0]}]`
+          : getVal(
+            namePrefix === 'scale' ? getHundred(values[0]) : values[0],
+          )}`
       }
       else {
+        const values = value.replace(
+          /,(?![^()]*\))/g,
+          ' ',
+        ).split(' ')
         if (namePrefix === 'scale') {
-          if (value.includes(','))
-            return `${important}${namePrefix}-[${value.split(',').join('_')}]`
-          return `${important}${namePrefix}-${getHundred(value)}`
+          if (values.length > 1)
+            return `${important}${namePrefix}-[${values.join('_')}]`
+          return `${important}${namePrefix}${isVar(value)
+            ? `-[${value}]`
+            : getVal(
+              namePrefix === 'scale' ? getHundred(value) : value,
+            )}`
         }
-        const [x, y] = value.split(',')
+        const [x, y] = values
         return `${important}${namePrefix}-x${getVal(
           x,
         )} ${important}${namePrefix}-y${getVal(y ?? x)}`
@@ -51,3 +66,4 @@ export function transform(key: string, val: string) {
     .filter(Boolean)
     .join(' ')
 }
+

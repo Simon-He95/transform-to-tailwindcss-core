@@ -49,10 +49,11 @@ export function getVal(val: string, transform?: Function) {
   return `-${transform ? transform(val) : val}`
 }
 
-export function getHundred(n: string | number) {
-  if (typeof n === 'string' && n.endsWith('%'))
-    return n.slice(0, -1)
-  return +n * 100
+export function getHundred(n: string) {
+  if (n.endsWith('%') || n.endsWith('deg') || n === '0')
+    return n
+  const v = +n * 100
+  return Number.isNaN(v) ? `${v}` : `${v}%`
 }
 
 export function joinWithLine(s: string) {

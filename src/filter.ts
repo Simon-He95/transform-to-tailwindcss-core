@@ -10,17 +10,13 @@ export function filter(key: string, val: string) {
   const [_, name, value] = v.match(/([\w-]+)\((.*)\)/)!
 
   if (hundred.includes(name))
-    return `${important}${name}${getVal(getHundred(value).toString())}`
+    return `${important}${name}${getVal(getHundred(value))}`
 
   if (name === 'drop-shadow')
     return `${important}drop-${box(name, value)}`
-  if (percent.includes(name)) {
-    return `${important}${name}${
-      value.endsWith('%')
-        ? getVal(value.slice(0, -1))
-        : getVal(getHundred(value).toString())
-    }`
-  }
+  if (percent.includes(name))
+    return `${important}${name}${getVal(getHundred(value))}`
+
   if (name === 'hue-rotate')
     return `${important}${name}${getVal(value.slice(0, -3))}`
   return `${important}${name}${getVal(value)}`

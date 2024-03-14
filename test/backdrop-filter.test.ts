@@ -13,25 +13,25 @@ describe('backdrop-filter', () => {
 
   it('brightness', () => {
     expect(toTailwindcss('backdrop-filter: brightness(.5);')).toBe(
-      'backdrop-brightness-50',
+      'backdrop-brightness-[50%]',
     )
   })
 
   it('contrast', () => {
     expect(toTailwindcss('backdrop-filter: contrast(.5);')).toBe(
-      'backdrop-contrast-50',
+      'backdrop-contrast-[50%]',
     )
   })
 
   it('grayscale 0.1', () => {
     expect(toTailwindcss('backdrop-filter: grayscale(0.1);')).toBe(
-      'backdrop-grayscale-10',
+      'backdrop-grayscale-[10%]',
     )
   })
 
   it('grayscale %', () => {
     expect(toTailwindcss('backdrop-filter: grayscale(10%);')).toBe(
-      'backdrop-grayscale-10',
+      'backdrop-grayscale-[10%]',
     )
   })
   it('hue', () => {
@@ -41,7 +41,7 @@ describe('backdrop-filter', () => {
   })
   it('invert', () => {
     expect(toTailwindcss('backdrop-filter: invert(0.1);')).toBe(
-      'backdrop-invert-10',
+      'backdrop-invert-[10%]',
     )
   })
 

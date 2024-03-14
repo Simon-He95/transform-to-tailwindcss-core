@@ -13,11 +13,11 @@ describe('transform', () => {
   })
 
   it('transform: scale(0);', () => {
-    expect(toTailwindcss('transform: scale(.5);')).toBe('scale-50')
+    expect(toTailwindcss('transform: scale(.5);')).toBe('scale-[50%]')
   })
 
   it('transform: scaleX(0);', () => {
-    expect(toTailwindcss('transform: scaleX( 0.5 );')).toBe('scale-x-50')
+    expect(toTailwindcss('transform: scaleX( 0.5 );')).toBe('scale-x-[50%]')
   })
 
   it('transform: rotate(0deg);', () => {
@@ -60,7 +60,7 @@ describe('transform', () => {
   })
 
   it('transform: scale(0.6)', () => {
-    expect(toTailwindcss('transform: scale(0.6);')).toBe('scale-60')
+    expect(toTailwindcss('transform: scale(0.6);')).toBe('scale-[60%]')
   })
 
   it('transform: scale(0.8, 0.9)', () => {
@@ -73,7 +73,12 @@ describe('transform', () => {
         'transform: translate(-26px, 16px) skew(50deg) scaleY(0.6)',
       ),
     ).toBe(
-      'translate-x-[-26px] translate-y-[16px] skew-x-[50deg] skew-y-[50deg] scale-y-60',
+      'translate-x-[-26px] translate-y-[16px] skew-x-[50deg] skew-y-[50deg] scale-y-[60%]',
     )
+  })
+  it('transform: translate(-26px, var(--translatey)) skew(var(--skew,60)) scaleY(var(--scale));', () => {
+    expect(
+      toTailwindcss('transform: translate(-26px, var(--translatey,20px)) skew(var(--skew,60)) scale(var(--scale, 30%))'),
+    ).toBe('translate-x-[-26px] translate-y-[var(--translatey,20px)] skew-x-[var(--skew,60)] skew-y-[var(--skew,60)] scale-[var(--scale,30%)]')
   })
 })
