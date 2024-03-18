@@ -53,6 +53,14 @@ describe('background', () => {
     expect(toTailwindcss('background-size:contain')).toBe('bg-contain')
   })
 
+  it('background-size:50%', () => {
+    expect(toTailwindcss('background-size:50%')).toBe('bg-[length:50%]')
+  })
+
+  it('background-size: var(--size, 50%)', () => {
+    expect(toTailwindcss('background-size: var(--size, 50%)')).toBe('bg-[length:var(--size,50%)]')
+  })
+
   // attachments
   it('background-attachments:fixed', () => {
     expect(toTailwindcss('background-attachment:fixed')).toBe('bg-fixed')

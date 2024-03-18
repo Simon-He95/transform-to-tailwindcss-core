@@ -2,7 +2,6 @@ import { getVal, isRgb, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
-  'background-size',
   'background-attachment',
   'background-position',
   'background-image',
@@ -18,6 +17,9 @@ const commaReplacer = '__comma__'
 export function background(key: string, val: string) {
   // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
+
+  if (key === 'background-size')
+    return `${important}bg${getVal(value, transformSpaceToLine, 'length:')}`
 
   if (backgroundMap.includes(key))
     return `${important}bg${getVal(value, transformSpaceToLine)}`

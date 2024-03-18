@@ -36,7 +36,7 @@ export function isHsl(s: string) {
   return s.startsWith('hsl')
 }
 
-export function getVal(val: string, transform?: Function) {
+export function getVal(val: string, transform?: Function, prefix = '') {
   if (
     isUrl(val)
     || isHex(val)
@@ -45,7 +45,7 @@ export function getVal(val: string, transform?: Function) {
     || isSize(val)
     || isVar(val)
   )
-    return `-[${trim(val, 'all').replace(/['"]/g, '')}]`
+    return `-[${prefix}${trim(val, 'all').replace(/['"]/g, '')}]`
   return `-${transform ? transform(val) : val}`
 }
 
