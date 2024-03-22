@@ -17,4 +17,28 @@ describe('line-height', () => {
       'leading-[calc(100%-20px)]',
     )
   })
+
+  it('line-height: 1', () => {
+    expect(toTailwindcss('line-height: 1;')).toBe('leading-none')
+  })
+
+  it('line-height: 1.25', () => {
+    expect(toTailwindcss('line-height: 1.25;')).toBe('leading-tight')
+  })
+
+  it('line-height: 1.375', () => {
+    expect(toTailwindcss('line-height: 1.375;')).toBe('leading-snug')
+  })
+
+  it('line-height: 1.5', () => {
+    expect(toTailwindcss('line-height: 1.5;')).toBe('leading-normal')
+  })
+
+  it('line-height: 1.625', () => {
+    expect(toTailwindcss('line-height: 1.625;')).toBe('leading-relaxed')
+  })
+
+  it('line-height: 2', () => {
+    expect(toTailwindcss('line-height: 2;')).toBe('leading-loose')
+  })
 })
