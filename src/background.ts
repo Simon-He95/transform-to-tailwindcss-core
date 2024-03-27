@@ -1,9 +1,8 @@
-import { getVal, isRgb, transformImportant } from './utils'
+import { getVal, isDynamic, isRgb, isSize, joinWithUnderLine, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
   'background-attachment',
-  'background-position',
   'background-image',
 ]
 const linearGradientReg
@@ -21,11 +20,16 @@ export function background(key: string, val: string) {
   if (key === 'background-size')
     return `${important}bg${getVal(value, transformSpaceToLine, 'length:')}`
 
+  if (key === 'background-position')
+    return `${important}bg${getVal(value, (v: string) => isDynamic(value) ? joinWithUnderLine(v) : `[${joinWithUnderLine(v)}]`)}`
+
   if (backgroundMap.includes(key))
-    return `${important}bg${getVal(value, transformSpaceToLine)}`
+    return `${important}bg${getVal(value, joinWithUnderLine)}`
 
   if (key === 'background') {
-    if (/(linear)-gradient/.test(value)) {
+    if (isSize(value))
+      return `bg${getVal(value, transformSpaceToLine, 'position:')}${important}`
+    if (/^(linear)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
       const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
@@ -45,13 +49,13 @@ export function background(key: string, val: string) {
 
       return direction
         ? `bg-gradient-to-${direction}${getLinearGradientPosition(
-            from,
-            via,
-            to,
-          )}`
+          from,
+          via,
+          to,
+        )}`
         : getLinearGradientPosition(from, via, to)
     }
-    else if (/(radial|conic)-gradient/.test(value)) {
+    else if (/^(radial|conic)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
       const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
@@ -68,18 +72,31 @@ export function background(key: string, val: string) {
 
       return `bg-gradient-${name}${getLinearGradientPosition(from, via, to)}`
     }
-    const match = value.match(/rgba?\([^)]+\)/)
+    const match = value.match(/^rgba?\([^)]+\)$/)
     if (match) {
       const rgb = match[0]
       value = value.replace(rgb, `[${rgb}]`)
     }
-    const urlMatch = value.match(/url\(["'\s\.\-_\w\/]*\)/)
+    const urlMatch = value.match(/^url\(["'\s\.\-_\w\/]*\)$/)
 
     if (urlMatch) {
       value = value.replace(
         urlMatch[0],
         `[${urlMatch[0].replace(/['"]/g, '')}]`,
       )
+    }
+
+    if (value.includes(' ')) {
+      let r: string = value.split(' ').map(v => background(key, `${v}${important ? ' !important' : ''}`)).join(' ')
+      // 如果 r 中包含多个bg-[position:xx], 需要合并用_分隔
+      const bgPositionReg = /bg-\[position:([^\]]*)\]/g
+      const bgPosition = r.match(bgPositionReg)
+      if (bgPosition && bgPosition.length > 1) {
+        const t = `bg-[position:${bgPosition.map(item => item.replace(bgPositionReg, '$1')).join('_')}]`
+        r = `${r.replace(bgPositionReg, '').replace(/\s+/g, ' ').split(' ').filter(Boolean).concat([t]).join(' ')}`
+      }
+
+      return r
     }
 
     return value
@@ -90,7 +107,6 @@ export function background(key: string, val: string) {
   else if (key === 'background-blend-mode') {
     return `${important}bg-blend-${value}`
   }
-
   return `${important}${replaceBackground(key, value)}-${transformBox(value)}`
 }
 
@@ -123,9 +139,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     from = from.replaceAll(commaReplacer, ',')
     const [fromColor, fromPosition] = from.split(' ')
     if (fromPosition) {
-      result += ` from-${
-        isRgb(fromColor) ? `[${fromColor}]` : fromColor
-      } from-${fromPosition}`
+      result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor
+        } from-${fromPosition}`
     }
     else if (fromColor) {
       result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor}`
@@ -137,9 +152,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [viaColor, viaPosition] = via
       .split(' ')
     if (viaPosition) {
-      result += ` via-${
-        isRgb(viaColor) ? `[${viaColor}]` : viaColor
-      } via-${viaPosition}`
+      result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor
+        } via-${viaPosition}`
     }
     else if (viaColor) {
       result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor}`
@@ -151,9 +165,8 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [toColor, toPosition] = to
       .split(' ')
     if (toPosition) {
-      result += ` to-${
-        isRgb(toColor) ? `[${toColor}]` : toColor
-      } to-${toPosition}`
+      result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor
+        } to-${toPosition}`
     }
     else if (toColor) {
       result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor}`

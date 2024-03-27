@@ -7,26 +7,26 @@ describe('background', () => {
 
   it('background:red !important', () => {
     expect(toTailwindcss('background:red center url("./a.jpg")')).toBe(
-      'bg-red bg-center bg-[url(./a.jpg)]',
+      'bg-red bg-[position:center] bg-[url(./a.jpg)]',
     )
   })
 
   it('background:rgb(125, 188, 234)', () => {
     expect(toTailwindcss('background:rgb(125, 188, 234) center')).toBe(
-      'bg-[rgb(125,188,234)] bg-center',
+      'bg-[rgb(125,188,234)] bg-[position:center]',
     )
   })
 
   it('background:rgba(125, 188, 234) center;', () => {
     expect(toTailwindcss('background:rgba(125, 188, 234, 0.5) center')).toBe(
-      'bg-[rgba(125,188,234,0.5)] bg-center',
+      'bg-[rgba(125,188,234,0.5)] bg-[position:center]',
     )
   })
 
   it('background:red center no-repeat url("./xxx.jpg")', () => {
     expect(
       toTailwindcss('background:red center no-repeat url("./xxx.jpg")'),
-    ).toBe('bg-red bg-center bg-no-repeat bg-[url(./xxx.jpg)]')
+    ).toBe('bg-red bg-[position:center] bg-no-repeat bg-[url(./xxx.jpg)]')
   })
 
   it('background-color:red', () => {
@@ -81,12 +81,12 @@ describe('background', () => {
 
   // position
   it('background-position:center', () => {
-    expect(toTailwindcss('background-position:center')).toBe('bg-center')
+    expect(toTailwindcss('background-position:center')).toBe('bg-[center]')
   })
 
   it('background-position:center center', () => {
     expect(toTailwindcss('background-position:center center')).toBe(
-      'bg-center-center',
+      'bg-[center_center]',
     )
   })
 
@@ -213,5 +213,65 @@ describe('background', () => {
         'background: #eee',
       ),
     ).toBe('bg-[#eee]')
+  })
+  it('background-image: linear-gradient;', () => {
+    expect(
+      toTailwindcss(
+        'background-image: linear-gradient(180deg, rgba(48,206,64,0,12) 0%, rgba(48,206,64,0.00) 100%);',
+      ),
+    ).toBe(
+      'bg-[linear-gradient(180deg,rgba(48,206,64,0,12)_0%,rgba(48,206,64,0.00)_100%)]',
+    )
+    // expect(
+    //   toTailwindcss(
+    //     'background-image: linear-gradient(90deg, rgba(39, 175, 106, 0.20) 0%, rgba(102, 216, 77, 0.20) 100%), linear-gradient(0deg, rgba(102, 215, 77, 0.16) 0%, rgba(255, 255, 255, 0.00) 100%)',
+    //   ),
+    // ).toBe(
+    //   'bg="[linear-gradient(90deg,rgba(39,175,106,0.20)_0%,rgba(102,216,77,0.20)_100%),linear-gradient(0deg,rgba(102,215,77,0.16)_0%,rgba(255,255,255,0.00)_100%)]"',
+    // )
+  })
+
+  it('background-color: var(--default, red);', () => {
+    expect(
+      toTailwindcss(
+        'background-color: var(--default, red);',
+      ),
+    ).toBe(
+      'bg-[var(--default,red)]',
+    )
+  })
+  it('background: var(--default, red);', () => {
+    expect(
+      toTailwindcss(
+        'background: var(--default, red);',
+      ),
+    ).toBe(
+      'bg-[var(--default,red)]',
+    )
+  })
+  it('background: var(--sim-col, linear-gradient(90deg, #25AE6A 0%, #68D94B 100%));', () => {
+    expect(
+      toTailwindcss(
+        'background: var(--sim-col, linear-gradient(90deg, #25AE6A 0%, #68D94B 100%));',
+      ),
+    ).toBe(
+      'bg-[var(--sim-col,linear-gradient(90deg,#25AE6A,0%,#68D94B,100%))]',
+    )
+  })
+  it('background: url(\'@/assets/images/guide/line.png\') no-repeat 8px 25px;', () => {
+    expect(
+      toTailwindcss(
+        'background: url(\'@/assets/images/guide/line.png\') no-repeat 8px 25px;',
+      ),
+    ).toBe(
+      'bg-[url(@/assets/images/guide/line.png)] bg-no-repeat bg-[position:8px_25px]',
+    )
+    expect(
+      toTailwindcss(
+        'background: url(\'@/assets/images/guide/line.png\') 8px 25px no-repeat;',
+      ),
+    ).toBe(
+      'bg-[url(@/assets/images/guide/line.png)] bg-no-repeat bg-[position:8px_25px]',
+    )
   })
 })

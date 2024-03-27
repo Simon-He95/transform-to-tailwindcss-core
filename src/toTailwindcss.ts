@@ -118,7 +118,7 @@ const typeMap: any = {
   color,
   row,
 }
-const splitReg = /([\w-]+)\s*:\s*([.\w\(\)-\s%+'",#\/!]+)/
+const splitReg = /([\w-]+)\s*:\s*([.\w\(\)-\s%+'",#\/!@]+)/
 
 export function toTailwindcss(css: String, isRem?: boolean) {
   const match = css.match(splitReg)

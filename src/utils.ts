@@ -1,7 +1,8 @@
 import type { TrimType } from './type'
 
 export const cssMathFnRE = /^(?:calc|clamp|min|max)\s*\(.*\)/
-export const numberWithUnitRE = /[0-9]+(px|rem|em|%|vw|vh|vmin|vmax|deg)/
+export const numberWithUnitRE = /^-?[0-9\.]+(px|rem|em|%|vw|vh|vmin|vmax|deg)$/
+export const positionMap = ['top', 'right', 'bottom', 'left', 'center']
 
 export function isCalc(s: string) {
   return s.startsWith('calc(')
@@ -36,16 +37,17 @@ export function isHsl(s: string) {
   return s.startsWith('hsl')
 }
 
+export function isGradient(s: string) {
+  return s.startsWith('linear-gradient') || s.startsWith('radial-gradient') || s.startsWith('conic-gradient')
+}
+
+export function isDynamic(val: string) {
+  return isUrl(val) || isColor(val) || isSize(val) || isGradient(val) || isVar(val) || isCalc(val)
+}
+
 export function getVal(val: string, transform?: Function, prefix = '') {
-  if (
-    isUrl(val)
-    || isHex(val)
-    || isRgb(val)
-    || isHsl(val)
-    || isSize(val)
-    || isVar(val)
-  )
-    return `-[${prefix}${trim(val, 'all').replace(/['"]/g, '')}]`
+  if (isDynamic(val))
+    return `-[${prefix}${trim(transform ? transform(val) : val, 'all').replace(/['"]/g, '')}]`
   return `-${transform ? transform(val) : val}`
 }
 
@@ -128,7 +130,7 @@ export function isVar(s: string) {
 }
 
 export function isSize(s: string) {
-  return cssMathFnRE.test(s) || numberWithUnitRE.test(s)
+  return cssMathFnRE.test(s) || numberWithUnitRE.test(s) || positionMap.includes(s)
 }
 
 export function isColor(s: string) {
