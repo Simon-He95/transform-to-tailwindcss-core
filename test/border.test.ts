@@ -62,4 +62,8 @@ describe('border', () => {
   it('border-bottom: #333;', () => {
     expect(toTailwindcss('border-bottom: 1px solid var(--default, red);')).toBe('border-b-[1px] border-b-solid border-b-[var(--default,red)]')
   })
+
+  it('border-width: 0 0 50px var(--xxx,10px)', () => {
+    expect(toTailwindcss('border-width: 0 0 50px var(--xxx,10px)')).toBe('border-l-0 border-t-0 border-r-[50px] border-b-[var(--xxx,10px)]')
+  })
 })
