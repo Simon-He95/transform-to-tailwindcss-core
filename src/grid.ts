@@ -2,6 +2,7 @@ import {
   getFirstName,
   getLastName,
   joinWithLine,
+  joinWithUnderLine,
   transformImportant,
 } from './utils'
 
@@ -17,7 +18,7 @@ export function grid(key: string, val: string) {
     }
     return `${important}grid-${
       getLastName(key) === 'rows' ? 'rows' : 'cols'
-    }-${value}`
+    }-${value.includes(' ') ? `[${joinWithUnderLine(value)}]` : value}`
   }
   if (key === 'grid-auto-flow') {
     return `${important}grid-flow-${joinWithLine(value).replace(
