@@ -26,7 +26,7 @@ describe('flex', () => {
     expect(toTailwindcss('flex-grow: 1;')).toBe('grow-1')
   })
 
-  it('flex-grow: 1;', () => {
+  it('flex: 1;', () => {
     expect(toTailwindcss('flex: 1;')).toBe('flex-1')
   })
 
