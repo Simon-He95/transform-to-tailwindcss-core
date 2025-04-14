@@ -1,4 +1,5 @@
 import { transformImportant } from './utils'
+
 const times = ['transition-delay', 'transition-duration']
 
 export function transition(key: string, val: string) {
@@ -27,7 +28,7 @@ function transformTransition(v: string, important = '') {
   return v
     .split(' ')
     .map((item) => {
-      if (/^[0-9]/.test(item) || /^\.[0-9]/.test(item)) {
+      if (/^\d/.test(item) || /^\.\d/.test(item)) {
         const calculateTime = item.endsWith('s')
           ? 1000 * +item.slice(0, -1)
           : item.slice(0, -3)
@@ -40,7 +41,7 @@ function transformTransition(v: string, important = '') {
         return `${important}transition-colors`
       if (item === 'linear')
         return `${important}ease-linear`
-      if (/^(cubic-bezier)|(ease)/.test(item))
+      if (/^(?:cubic-bezier|ease)/.test(item))
         return `${important}${item}`
       return `${important}transition-${item}`
     })

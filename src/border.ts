@@ -35,7 +35,7 @@ export function border(key: string, val: string) {
     return ''
   if (key === 'border-width' && value.includes(' '))
     return value.split(' ').map((v, i) => `border-${borderSize[i].split('-')[1][0]}${getVal(v)}${important}`).join(' ')
-  if (/^\d[%|(px)|(rem)]$/.test(value) || key === 'border-collapse')
+  if (/^\d[%|(px)rem]$/.test(value) || key === 'border-collapse')
     return `${important}border-${value}`
   if (key === 'border-width' || key === 'border-style')
     return `${important}border${getVal(value)}`

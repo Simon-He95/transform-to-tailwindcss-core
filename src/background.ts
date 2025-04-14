@@ -6,15 +6,14 @@ const backgroundMap = [
   'background-image',
 ]
 const linearGradientReg
-  = /linear-gradient\(\s*to([\w\s]+),?([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
+  = /linear-gradient\(\s*to([\w\s]+),?([\w()#%\s.]+)?,([\w()#%\s.]+)?,?([\w#%\s.]+)?\)$/
 
 const otherGradientReg
-  = /(radial|conic)-gradient\(([\w\(\)#%\s\.]+)?,([\w\(\)#%\s\.]+)?,?([\w#%\s\.]+)?\)$/
+  = /(radial|conic)-gradient\(([\w()#%\s.]+)?,([\w()#%\s.]+)?,?([\w#%\s.]+)?\)$/
 
 const commaReplacer = '__comma__'
 
 export function background(key: string, val: string) {
-  // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
 
   if (key === 'background-size') {
@@ -31,17 +30,15 @@ export function background(key: string, val: string) {
   if (key === 'background') {
     if (isSize(value))
       return `bg${getVal(value, transformSpaceToLine, 'position:')}${important}`
-    if (/^(linear)-gradient/.test(value)) {
+    if (value.startsWith('linear-gradient')) {
       // 区分rgba中的,和linear-gradient中的,
-      const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
-        all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
-      )
+      const newValue = value.replace(/rgba?\(([^)]+)\)/g, (all, v) =>
+        all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)))
 
       const matcher = newValue.match(linearGradientReg)
       if (!matcher)
         return
 
-      // eslint-disable-next-line prefer-const
       let [direction, from, via, to] = matcher.slice(1)
 
       direction = direction
@@ -57,11 +54,10 @@ export function background(key: string, val: string) {
         )}`
         : getLinearGradientPosition(from, via, to)
     }
-    else if (/^(radial|conic)-gradient/.test(value)) {
+    else if (/^(?:radial|conic)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
-      const newValue = value.replace(/rgba?\(([^\)]+)\)/g, (all, v) =>
-        all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)),
-      )
+      const newValue = value.replace(/rgba?\(([^)]+)\)/g, (all, v) =>
+        all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)))
 
       const matcher = newValue.match(otherGradientReg)
       if (!matcher)
@@ -79,7 +75,7 @@ export function background(key: string, val: string) {
       const rgb = match[0]
       value = value.replace(rgb, `[${rgb}]`)
     }
-    const urlMatch = value.match(/^url\(["'\s\.\-_\w\/]*\)$/)
+    const urlMatch = value.match(/^url\(["'\s.\-\w/]*\)$/)
 
     if (urlMatch) {
       value = value.replace(
@@ -119,7 +115,7 @@ function replaceBackground(s: string, val: string) {
 }
 
 function transformBox(s: string) {
-  const reg = /(border)|(content)|(padding)-box/
+  const reg = /border|content|padding-box/
   if (reg.test(s))
     return s.replace('-box', '')
   if (s.startsWith('repeat-'))
@@ -146,7 +142,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [fromColor, fromPosition] = from.split(' ')
     if (fromPosition) {
       result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor
-        } from-${fromPosition}`
+      } from-${fromPosition}`
     }
     else if (fromColor) {
       result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor}`
@@ -159,7 +155,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
       .split(' ')
     if (viaPosition) {
       result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor
-        } via-${viaPosition}`
+      } via-${viaPosition}`
     }
     else if (viaColor) {
       result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor}`
@@ -172,7 +168,7 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
       .split(' ')
     if (toPosition) {
       result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor
-        } to-${toPosition}`
+      } to-${toPosition}`
     }
     else if (toColor) {
       result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor}`

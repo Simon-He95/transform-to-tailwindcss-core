@@ -23,7 +23,6 @@ export function transform(key: string, val: string) {
       const matcher = v.match(/([a-z]+)([A-Z])?\((.*)\)/)
       if (!matcher)
         return undefined
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, namePrefix, nameSuffix, value] = matcher
       if (nameSuffix) {
         const values = value.replace(
@@ -35,16 +34,16 @@ export function transform(key: string, val: string) {
             return isVar(v)
               ? v
               : getVal(
-                namePrefix === 'scale' ? getHundred(v) : v,
-              )
+                  namePrefix === 'scale' ? getHundred(v) : v,
+                )
           }).join('_')}]`
         }
 
         return `${important}${namePrefix}-${nameSuffix.toLowerCase()}${isVar(values[0])
           ? `-[${values[0]}]`
           : getVal(
-            namePrefix === 'scale' ? getHundred(values[0]) : values[0],
-          )}`
+              namePrefix === 'scale' ? getHundred(values[0]) : values[0],
+            )}`
       }
       else {
         const values = value.replace(
@@ -57,8 +56,8 @@ export function transform(key: string, val: string) {
           return `${important}${namePrefix}${isVar(value)
             ? `-[${value}]`
             : getVal(
-              namePrefix === 'scale' ? getHundred(value) : value,
-            )}`
+                namePrefix === 'scale' ? getHundred(value) : value,
+              )}`
         }
         const [x, y] = values
         return `${important}${namePrefix}-x${getVal(
@@ -69,4 +68,3 @@ export function transform(key: string, val: string) {
     .filter(Boolean)
     .join(' ')
 }
-

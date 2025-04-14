@@ -1,7 +1,7 @@
 import type { TrimType } from './type'
 
 export const cssMathFnRE = /^(?:calc|clamp|min|max)\s*\(.*\)/
-export const numberWithUnitRE = /^-?[0-9\.]+(px|rem|em|%|vw|vh|vmin|vmax|deg)$/
+export const numberWithUnitRE = /^-?[0-9.]+(px|rem|em|%|vw|vh|vmin|vmax|deg)$/
 export const positionMap = ['top', 'right', 'bottom', 'left', 'center']
 
 export function isCalc(s: string) {
@@ -26,7 +26,7 @@ export function isPercent(s: string) {
 }
 
 export function isHex(hex: string) {
-  return /^#[0-9A-Fa-f]{2,}$/.test(hex)
+  return /^#[0-9A-F]{2,}$/i.test(hex)
 }
 
 export function isRgb(s: string) {
@@ -72,7 +72,7 @@ export function joinWithUnderLine(s: string) {
  * 删除空格
  * @param { string } s 字符串
  * @param { TrimType } type 所有 ｜ 前置 ｜ 前后 ｜ 后置 'all' | 'pre' | 'around' | 'post'
- * @returns
+ * @returns { string } 删除空格后的字符串
  */
 export function trim(s: string, type: TrimType = 'around'): string {
   if (type === 'pre')
@@ -91,31 +91,28 @@ export function transformImportant(v: string) {
     .replace(/\s*,\s*/g, ',')
     .replace(/\s*\/\s*/, '/')
   if (/rgb/.test(v)) {
-    v = v.replace(/rgba?\(([^\)]+)\)/g, (all, k) => {
+    v = v.replace(/rgba?\(([^)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
       return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
-    },
-    )
+    })
   }
 
   if (/hsl/.test(v)) {
-    v = v.replace(/hsla?\(([^\)]+)\)/g, (all, k) => {
+    v = v.replace(/hsla?\(([^)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
       return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
-    },
-    )
+    })
   }
 
-  if (/var\([^\)]+\)/.test(v)) {
-    v = v.replace(/var\(([^\)]+)\)/g, (all, k) => {
+  if (/var\([^)]+\)/.test(v)) {
+    v = v.replace(/var\(([^)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
       return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
-    },
-    )
+    })
   }
 
   if (v.endsWith('!important'))
-    return [v.replace(/\s*\!important/, '').trim(), '!']
+    return [v.replace(/\s*!important/, '').trim(), '!']
 
   return [v.trim(), '']
 }

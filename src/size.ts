@@ -1,4 +1,5 @@
 import { getFirstName, getVal, isDynamic, transformImportant } from './utils'
+
 export function size(key: string, val: string) {
   const [value, important] = transformImportant(val)
 

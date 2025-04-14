@@ -1,4 +1,5 @@
 import { getFirstName, transformImportant } from './utils'
+
 export function box(key: string, val: string) {
   // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
