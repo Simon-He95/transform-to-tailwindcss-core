@@ -12,6 +12,14 @@ describe('transform', () => {
     )
   })
 
+  it('transform: none;', () => {
+    expect(toTailwindcss('transform: none;')).toBe('transform-none')
+  })
+
+  it('transform-origin: 50% 50%;', () => {
+    expect(toTailwindcss('transform-origin: 50% 50%;')).toBe('origin-[50%_50%]')
+  })
+
   it('transform: scale(0);', () => {
     expect(toTailwindcss('transform: scale(.5);')).toBe('scale-[50%]')
   })

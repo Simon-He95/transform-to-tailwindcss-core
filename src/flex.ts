@@ -1,6 +1,7 @@
 import {
   getFirstName,
   getLastName,
+  getVal,
   joinWithUnderLine,
   transformImportant,
 } from './utils'
@@ -11,7 +12,7 @@ export function flex(key: string, val: string) {
   if (key === 'flex-shrink' && value === '1')
     return `${important}shrink`
   if (lastMaps.includes(key))
-    return `${important}${getLastName(key)}-${value}`
+    return `${important}${getLastName(key)}${getVal(value)}`
   if (value === '1')
     return `${important}flex-1`
   const firstVal = value[0]

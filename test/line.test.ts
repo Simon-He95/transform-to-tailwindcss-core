@@ -22,6 +22,10 @@ describe('line-height', () => {
     expect(toTailwindcss('line-height: 1;')).toBe('leading-none')
   })
 
+  it('line-height: 1.2', () => {
+    expect(toTailwindcss('line-height: 1.2;')).toBe('leading-[1.2]')
+  })
+
   it('line-height: 1.25', () => {
     expect(toTailwindcss('line-height: 1.25;')).toBe('leading-tight')
   })

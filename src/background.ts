@@ -17,9 +17,11 @@ export function background(key: string, val: string) {
   // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
 
-  if (key === 'background-size')
-    return `${important}bg${getVal(value, transformSpaceToLine, 'length:')}`
-
+  if (key === 'background-size') {
+    return /\d/.test(value)
+      ? `${important}bg${getVal(value, transformSpaceToUnderLine, value.includes(' ') ? '' : 'length:', true)}`
+      : `${important}bg${getVal(value, transformSpaceToLine)}`
+  }
   if (key === 'background-position')
     return `${important}bg${getVal(value, (v: string) => isDynamic(value) ? joinWithUnderLine(v) : `[${joinWithUnderLine(v)}]`)}`
 
@@ -127,6 +129,10 @@ function transformBox(s: string) {
 
 function transformSpaceToLine(s: string) {
   return s.replace(/\s+/, ' ').replace(' ', '-')
+}
+
+function transformSpaceToUnderLine(s: string) {
+  return s.replace(/\s+/, ' ').replace(' ', '_')
 }
 
 function getLinearGradientPosition(from: string, via: string, to: string) {

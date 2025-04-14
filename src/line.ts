@@ -15,5 +15,5 @@ export function line(key: string, val: string) {
   if (lineMap[value])
     return `${important}leading-${lineMap[value]}`
 
-  return `${important}leading${getVal(value)}`
+  return `leading${getVal(value, v => /\d$/.test(v) ? `[${v}]` : v)}${important}`
 }

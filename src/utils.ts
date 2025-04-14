@@ -45,10 +45,12 @@ export function isDynamic(val: string) {
   return isUrl(val) || isColor(val) || isSize(val) || isGradient(val) || isVar(val) || isCalc(val)
 }
 
-export function getVal(val: string, transform?: Function, prefix = '') {
-  if (isDynamic(val))
+export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
+  if (isDynamicFlag || isDynamic(val))
     return `-[${prefix}${trim(transform ? transform(val) : val, 'all').replace(/['"]/g, '')}]`
-  return `-${transform ? transform(val) : val}`
+  return prefix
+    ? `-[${prefix}${transform ? transform(val) : val}]`
+    : `-${transform ? transform(val) : val}`
 }
 
 export function getHundred(n: string) {

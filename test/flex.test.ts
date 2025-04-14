@@ -35,7 +35,7 @@ describe('flex', () => {
   })
 
   it('flex-basis: 0px;', () => {
-    expect(toTailwindcss('flex-basis: 0px;')).toBe('basis-0px')
+    expect(toTailwindcss('flex-basis: 0px;')).toBe('basis-[0px]')
   })
 
   it('flex-direction: row-reverse;', () => {

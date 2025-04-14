@@ -17,9 +17,21 @@ describe('background', () => {
     )
   })
 
-  it('background:rgba(125, 188, 234) center;', () => {
-    expect(toTailwindcss('background:rgba(125, 188, 234, 0.5) center')).toBe(
-      'bg-[rgba(125,188,234,0.5)] bg-[position:center]',
+  it('background-size:28rpx 28rpx', () => {
+    expect(toTailwindcss('background-size:28rpx 28rpx')).toBe(
+      'bg-[28rpx_28rpx]',
+    )
+  })
+
+  it('background-size:100% auto', () => {
+    expect(toTailwindcss('background-size:100% auto')).toBe(
+      'bg-[100%_auto]',
+    )
+  })
+
+  it('background:rgba(125, 188, 234) center center;', () => {
+    expect(toTailwindcss('background:rgba(125, 188, 234, 0.5) center center')).toBe(
+      'bg-[rgba(125,188,234,0.5)] bg-[position:center_center]',
     )
   })
 
