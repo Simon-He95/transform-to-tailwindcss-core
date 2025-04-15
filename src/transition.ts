@@ -1,4 +1,4 @@
-import { transformImportant } from './utils'
+import { getVal, transformImportant } from './utils'
 
 const times = ['transition-delay', 'transition-duration']
 
@@ -23,27 +23,20 @@ export function transition(key: string, val: string) {
     return `${key.split('-')[1]}-${value.slice(0, -2)}`
 }
 
-function transformTransition(v: string, important = '') {
+function transformTransition(v: string, important: string) {
   let hasDuration = false
   return v
     .split(' ')
     .map((item) => {
       if (/^\d/.test(item) || /^\.\d/.test(item)) {
-        const calculateTime = item.endsWith('s')
-          ? 1000 * +item.slice(0, -1)
-          : item.slice(0, -3)
         if (hasDuration)
-          return `${important}delay-${calculateTime}`
+          return `${important}delay${getVal(item, undefined)}`
         hasDuration = true
-        return `${important}duration-${calculateTime}`
+        return `${important}duration${getVal(item, undefined)}`
       }
-      if (item.startsWith('background'))
-        return `${important}transition-colors`
-      if (item === 'linear')
-        return `${important}ease-linear`
-      if (/^(?:cubic-bezier|ease)/.test(item))
-        return `${important}${item}`
-      return `${important}transition-${item}`
+      if (item === 'background-color')
+        return 'colors'
+      return `transition${getVal(item)}`
     })
     .join(' ')
 }

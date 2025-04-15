@@ -38,7 +38,7 @@ import { top } from './top'
 import { transform } from './transform'
 import { transition } from './transition'
 import { user } from './user'
-import { getFirstName } from './utils'
+import { browserReg, getFirstName } from './utils'
 import { vertical } from './vertical'
 import { white } from './white'
 import { will } from './will'
@@ -121,6 +121,7 @@ const typeMap: any = {
 const splitReg = /([\w-]+)\s*:\s*([.\w()-\s%+'",#/!@]+)/
 
 export function toTailwindcss(css: string, isRem?: boolean) {
+  css = css.replace(browserReg, '')
   const match = css.match(splitReg)
   if (!match)
     return

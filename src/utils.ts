@@ -41,8 +41,12 @@ export function isGradient(s: string) {
   return s.startsWith('linear-gradient') || s.startsWith('radial-gradient') || s.startsWith('conic-gradient')
 }
 
+export function isCubicBezier(s: string) {
+  return s.startsWith('cubic-bezier')
+}
+
 export function isDynamic(val: string) {
-  return isUrl(val) || isColor(val) || isSize(val) || isGradient(val) || isVar(val) || isCalc(val)
+  return isUrl(val) || isColor(val) || isSize(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val)
 }
 
 export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
@@ -135,3 +139,5 @@ export function isSize(s: string) {
 export function isColor(s: string) {
   return isHex(s) || isRgb(s) || isHsl(s)
 }
+
+export const browserReg = /-webkit-|-moz-|-ms-|-o-/g
