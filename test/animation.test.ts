@@ -7,30 +7,30 @@ describe('animation', () => {
   })
 
   it('animation: revert;', () => {
-    expect(toTailwindcss('animation: revert;')).toBe('animate-revert')
+    expect(toTailwindcss('animation: revert;')).toBe('animate-[revert]')
   })
 
   it('animation-play-state: paused;', () => {
     expect(toTailwindcss('animation-play-state: paused;')).toBe(
-      'animate-paused',
+      'animate-[paused]',
     )
   })
 
   it('animation-direction: reverse;', () => {
     expect(toTailwindcss(' animation-direction: reverse;')).toBe(
-      'animate-reverse',
+      'animate-[reverse]',
     )
   })
 
   it('animation-fill-mode: forwards;', () => {
     expect(toTailwindcss('animation-fill-mode: forwards;')).toBe(
-      'animate-forwards',
+      'animate-[forwards]',
     )
   })
 
   it('animation: back-in-down 1s linear 1;', () => {
     expect(toTailwindcss('animation: back-in-down 1s linear 1;')).toBe(
-      'animate-back-in-down',
+      'animate-[back-in-down_1s_linear_1]',
     )
   })
 })
