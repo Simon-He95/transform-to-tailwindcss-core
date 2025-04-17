@@ -219,6 +219,7 @@ describe('background', () => {
       'bg-gradient-conic from-#fff from-0.25turn via-#000 via-0.25turn to-#fff to-0.5turn',
     )
   })
+  
   it('background: #eee', () => {
     expect(
       toTailwindcss(
@@ -226,6 +227,7 @@ describe('background', () => {
       ),
     ).toBe('bg-[#eee]')
   })
+
   it('background-image: linear-gradient;', () => {
     expect(
       toTailwindcss(
@@ -234,13 +236,14 @@ describe('background', () => {
     ).toBe(
       'bg-[linear-gradient(180deg,rgba(48,206,64,0,12)_0%,rgba(48,206,64,0.00)_100%)]',
     )
-    // expect(
-    //   toTailwindcss(
-    //     'background-image: linear-gradient(90deg, rgba(39, 175, 106, 0.20) 0%, rgba(102, 216, 77, 0.20) 100%), linear-gradient(0deg, rgba(102, 215, 77, 0.16) 0%, rgba(255, 255, 255, 0.00) 100%)',
-    //   ),
-    // ).toBe(
-    //   'bg="[linear-gradient(90deg,rgba(39,175,106,0.20)_0%,rgba(102,216,77,0.20)_100%),linear-gradient(0deg,rgba(102,215,77,0.16)_0%,rgba(255,255,255,0.00)_100%)]"',
-    // )
+
+    expect(
+      toTailwindcss(
+        'background-image: linear-gradient(90deg, rgba(39, 175, 106, 0.20) 0%, rgba(102, 216, 77, 0.20) 100%), linear-gradient(0deg, rgba(102, 215, 77, 0.16) 0%, rgba(255, 255, 255, 0.00) 100%)',
+      ),
+    ).toBe(
+      'bg-[linear-gradient(90deg,rgba(39,175,106,0.20)_0%,rgba(102,216,77,0.20)_100%),linear-gradient(0deg,rgba(102,215,77,0.16)_0%,rgba(255,255,255,0.00)_100%)]',
+    )
   })
 
   it('background-color: var(--default, red);', () => {
@@ -252,6 +255,7 @@ describe('background', () => {
       'bg-[var(--default,red)]',
     )
   })
+  
   it('background: var(--default, red);', () => {
     expect(
       toTailwindcss(
@@ -261,6 +265,7 @@ describe('background', () => {
       'bg-[var(--default,red)]',
     )
   })
+
   it('background: var(--sim-col, linear-gradient(90deg, #25AE6A 0%, #68D94B 100%));', () => {
     expect(
       toTailwindcss(
@@ -270,6 +275,7 @@ describe('background', () => {
       'bg-[var(--sim-col,linear-gradient(90deg,#25AE6A,0%,#68D94B,100%))]',
     )
   })
+
   it('background: url(\'@/assets/images/guide/line.png\') no-repeat 8px 25px;', () => {
     expect(
       toTailwindcss(
@@ -278,12 +284,22 @@ describe('background', () => {
     ).toBe(
       'bg-[url(@/assets/images/guide/line.png)] bg-no-repeat bg-[position:8px_25px]',
     )
+
     expect(
       toTailwindcss(
         'background: url(\'@/assets/images/guide/line.png\') 8px 25px no-repeat;',
       ),
     ).toBe(
       'bg-[url(@/assets/images/guide/line.png)] bg-no-repeat bg-[position:8px_25px]',
+    )
+
+
+    expect(
+      toTailwindcss(
+        'background: url(https://p9-semi-sign.byteimg.com/tos-cn-i-acvclvrq33/58555135a82b413da78fca29c1e857f9.PNG?rk3s=521bdb00&x-expires=1744871326&x-signature=Z92x16k%2FRqWT5yU%2Fxj2poYUMZyI%3D)',
+      ),
+    ).toBe(
+      'bg-[url(https://p9-semi-sign.byteimg.com/tos-cn-i-acvclvrq33/58555135a82b413da78fca29c1e857f9.PNG?rk3s=521bdb00&x-expires=1744871326&x-signature=Z92x16k%2FRqWT5yU%2Fxj2poYUMZyI%3D)]',
     )
   })
 })

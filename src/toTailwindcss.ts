@@ -118,7 +118,7 @@ const typeMap: any = {
   color,
   row,
 }
-const splitReg = /([\w-]+)\s*:\s*([.\w()-\s%+'",#/!@]+)/
+const splitReg = /([\w-]+)\s*:\s*([^;]+)/
 
 export function toTailwindcss(css: string, isRem?: boolean) {
   css = css.replace(browserReg, '')
