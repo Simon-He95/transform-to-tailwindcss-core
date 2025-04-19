@@ -11,11 +11,11 @@ import {
 export function transform(key: string, val: string) {
   const [v, important] = transformImportant(val)
   if (key === 'transform-origin')
-    return `origin-${/\d/.test(v) && v.includes(' ') ? `[${joinWithUnderLine(v)}]` : joinWithLine(v)}${important}`
+    return `${important}origin-${/\d/.test(v) && v.includes(' ') ? `[${joinWithUnderLine(v)}]` : joinWithLine(v)}`
   if (key === 'transform-style')
     return `${important}transform-${v}`
   if (val === 'none')
-    return `${key}-none`
+    return `${important}${key}-none`
 
   return joinEmpty(v)
     .split(' ')

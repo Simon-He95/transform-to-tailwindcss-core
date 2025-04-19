@@ -13,4 +13,12 @@ describe('overflow', () => {
   it('overflow-x: visible;', () => {
     expect(toTailwindcss('overflow-x: visible;')).toBe('overflow-x-visible')
   })
+  
+  it('overflow-wrap: break-word;', () => {
+    expect(toTailwindcss('overflow-wrap: break-word;')).toBe('wrap-break-word')
+  })
+
+  it('overflow-wrap: anywhere;', () => {
+    expect(toTailwindcss('overflow-wrap: anywhere;')).toBe('wrap-anywhere')
+  })
 })

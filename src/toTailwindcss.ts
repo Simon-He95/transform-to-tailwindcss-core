@@ -22,11 +22,13 @@ import { letter } from './letter'
 import { line } from './line'
 import { list } from './list'
 import { transformMargin } from './margin'
+import { mask } from './mask'
 import { max } from './max'
 import { mix } from './mix'
 import { object } from './object'
 import { opacity } from './opacity'
 import { outline } from './outline'
+import { overflow } from './overflow.ts'
 import { overscroll } from './overscroll'
 import { place } from './place'
 import { resize } from './resize'
@@ -61,10 +63,14 @@ const typeMap: any = {
   clear: float,
   isolation,
   object,
-  overflow: float,
+  overflow,
   overscroll,
   position: display,
   top,
+  hyphens: top,
+  mask,
+  field: top,
+  forced: top,
   left: top,
   right: top,
   bottom: top,

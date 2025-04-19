@@ -36,7 +36,7 @@ function transformTransition(v: string, important: string) {
       }
       if (item === 'background-color')
         return 'colors'
-      return `transition${getVal(item)}`
+      return `${important}transition${getVal(item)}`
     })
     .join(' ')
 }

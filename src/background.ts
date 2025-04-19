@@ -1,17 +1,10 @@
-import { getVal, isDynamic, isRgb, isSize, joinWithUnderLine, transformImportant } from './utils'
+import { commaReplacer, getVal, isDynamic, isRgb, isSize, joinWithUnderLine, linearGradientReg, otherGradientReg, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
   'background-attachment',
   'background-image',
 ]
-const linearGradientReg
-  = /linear-gradient\(\s*to([\w\s]+),?([\w()#%\s.]+)?,([\w()#%\s.]+)?,?([\w#%\s.]+)?\)$/
-
-const otherGradientReg
-  = /(radial|conic)-gradient\(([\w()#%\s.]+)?,([\w()#%\s.]+)?,?([\w#%\s.]+)?\)$/
-
-const commaReplacer = '__comma__'
 
 export function background(key: string, val: string) {
   let [value, important] = transformImportant(val)

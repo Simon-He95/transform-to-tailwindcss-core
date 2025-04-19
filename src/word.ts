@@ -6,5 +6,7 @@ export function word(key: string, val: string) {
     return `${important}word-spacing${getVal(val)}`
   if (value === 'keep-all')
     return `${important}break-keep`
+  if (value === 'break-word')
+    return `break-words${important}`
   return `${important}break-${getLastName(value)}`
 }

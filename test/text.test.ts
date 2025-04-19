@@ -61,4 +61,8 @@ describe('text', () => {
   it('text-indent: 0px;', () => {
     expect(toTailwindcss('text-indent: 0px;')).toBe('indent-[0px]')
   })
+
+  it('text-wrap: wrap;', () => {
+    expect(toTailwindcss('text-wrap: wrap;')).toBe('text-wrap')
+  })
 })

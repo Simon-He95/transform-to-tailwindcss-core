@@ -46,7 +46,7 @@ export function isCubicBezier(s: string) {
 }
 
 export function isDynamic(val: string) {
-  return isUrl(val) || isColor(val) || isSize(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val)
+  return isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val)
 }
 
 export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
@@ -141,3 +141,13 @@ export function isColor(s: string) {
 }
 
 export const browserReg = /-webkit-|-moz-|-ms-|-o-/g
+
+export const linearGradientReg
+  = /linear-gradient\(\s*to([\w\s]+),?([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/
+
+export const linearGradientReg1
+  = /linear-gradient\(\s*([^,]*),?([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/
+
+export const otherGradientReg
+  = /(radial|conic)-gradient\(([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/
+export const commaReplacer = '__comma__'
