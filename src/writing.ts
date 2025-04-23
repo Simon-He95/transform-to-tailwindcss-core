@@ -1,4 +1,4 @@
-import { transformImportant } from "./utils"
+import { transformImportant } from './utils'
 
 export function writing(key: string, val: string) {
   const [value, important] = transformImportant(val)

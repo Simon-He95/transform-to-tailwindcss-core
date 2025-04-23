@@ -1,8 +1,9 @@
 {
   "name": "transform-to-tailwindcss-core",
+  "type": "module",
   "version": "0.0.24",
-  "packageManager": "pnpm@10.8.1",
-  "description": "",
+  "packageManager": "pnpm@10.9.0",
+  "description": "A core library to transform CSS or style objects to Tailwind CSS utility classes. Simplifies migration and integration with Tailwind CSS.",
   "author": "Simon He",
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
@@ -12,17 +13,26 @@
     "url": "git+https://github.com/Simon-He95/transform-to-tailwindcss-core.git"
   },
   "bugs": "https://github.com/Simon-He95/transform-to-tailwindcss-core/issues",
-  "keywords": [],
+  "keywords": [
+    "tailwindcss",
+    "css",
+    "transform",
+    "utility",
+    "converter",
+    "style",
+    "migration",
+    "core",
+    "library"
+  ],
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -39,7 +49,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup ./src/index.ts --format cjs,esm --dts --clean --minify",
+    "build": "tsdown ./src/index.ts",
     "dev": "npm run build -- --watch src",
     "format": "prettier --write --cache .",
     "lint": "eslint . --cache",
@@ -54,13 +64,13 @@
     "@antfu/eslint-config": "^4.12.0",
     "@types/node": "^18.19.86",
     "bumpp": "^8.2.1",
-    "eslint": "^9.24.0",
+    "eslint": "^9.25.1",
     "esno": "^0.16.3",
     "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
-    "tsup": "^6.7.0",
+    "tsdown": "^0.9.5",
     "tsx": "^3.14.0",
     "typescript": "^4.9.5",
-    "vitest": "^0.15.2"
+    "vitest": "^3.1.2"
   }
 }
