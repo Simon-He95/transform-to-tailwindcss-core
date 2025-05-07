@@ -3,7 +3,7 @@ import { toTailwindcss } from '../src/toTailwindcss'
 
 describe('animation', () => {
   it('animation-delay: 2s;', () => {
-    expect(toTailwindcss('animation-delay:2s;')).toBe('animate-2s')
+    expect(toTailwindcss('animation-delay:2s;')).toBe('animate-[2s]')
   })
 
   it('animation: revert;', () => {

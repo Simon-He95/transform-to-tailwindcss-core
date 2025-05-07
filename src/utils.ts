@@ -1,7 +1,7 @@
 import type { TrimType } from './type'
 
 export const cssMathFnRE = /^(?:calc|clamp|min|max)\s*\(.*\)/
-export const numberWithUnitRE = /^-?[0-9.]+(px|rem|em|%|vw|vh|vmin|vmax|deg)$/
+export const numberWithUnitRE = /^-?[0-9.]+(px|rem|em|%|vw|vh|vmin|vmax|deg|s|ms)$/
 export const positionMap = ['top', 'right', 'bottom', 'left', 'center']
 
 export function isCalc(s: string) {
