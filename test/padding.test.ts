@@ -42,4 +42,10 @@ describe('padding-bottom', () => {
   it('padding-bottom:50px', () => {
     expect(toTailwindcss('padding-bottom:50px')).toBe('pb-[50px]')
   })
+  it('padding-bottom: constant(safe-area-inset-bottom)', () => {
+    expect(toTailwindcss('padding-bottom: constant(safe-area-inset-bottom)')).toBe('pb-[constant(safe-area-inset-bottom)]')
+  })
+  it('padding-bottom: env(safe-area-inset-bottom)', () => {
+    expect(toTailwindcss('padding-bottom: env(safe-area-inset-bottom)')).toBe('pb-[env(safe-area-inset-bottom)]')
+  })
 })

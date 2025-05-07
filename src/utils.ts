@@ -45,8 +45,28 @@ export function isCubicBezier(s: string) {
   return s.startsWith('cubic-bezier')
 }
 
+export function isAttr(s: string) {
+  return /^attr\(/i.test(s)
+}
+
+export function isRepeatingLinearGradient(s: string) {
+  return /^repeating-linear-gradient\(/i.test(s)
+}
+
+export function isRepeatingRadialGradient(s: string) {
+  return /^repeating-radial-gradient\(/i.test(s)
+}
+
+export function isConstant(s: string) {
+  return /^constant\(/.test(s)
+}
+
+export function isEnv(s: string) {
+  return /^env\(/.test(s)
+}
+
 export function isDynamic(val: string) {
-  return isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val)
+  return isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val)
 }
 
 export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
