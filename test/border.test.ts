@@ -15,6 +15,11 @@ describe('border', () => {
     expect(toTailwindcss('border-radius: 0.25rem;')).toBe('rounded-[0.25rem]')
   })
 
+  it('border-top-left-radius: 20px', () => {
+    expect(toTailwindcss('border-top-left-radius: 20px;')).toBe('rounded-tl-[20px]')
+  })
+
+
   it('border-width', () => {
     expect(toTailwindcss('border-width: 2px;')).toBe('border-[2px]')
   })

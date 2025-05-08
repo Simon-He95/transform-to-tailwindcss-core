@@ -22,7 +22,7 @@ export function background(key: string, val: string) {
 
   if (key === 'background') {
     if (isSize(value))
-      return `bg${getVal(value, transformSpaceToLine, 'position:')}${important}`
+      return `${important}bg${getVal(value, transformSpaceToLine, 'position:')}`
     if (value.startsWith('linear-gradient')) {
       // 区分rgba中的,和linear-gradient中的,
       const newValue = value.replace(/rgba?\(([^)]+)\)/g, (all, v) =>

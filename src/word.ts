@@ -7,6 +7,6 @@ export function word(key: string, val: string) {
   if (value === 'keep-all')
     return `${important}break-keep`
   if (value === 'break-word')
-    return `break-words${important}`
+    return `${important}break-words`
   return `${important}break-${getLastName(value)}`
 }

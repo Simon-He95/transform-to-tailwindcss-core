@@ -10,7 +10,7 @@ export function font(key: string, val: string) {
   if (key === 'font-family') {
     const match = value.match(/ui-(\w{0,4})/)!
     if (!match)
-      return `font-[${joinWithUnderLine(val)}]${important}`
+      return `${important}font-[${joinWithUnderLine(val)}]`
     const [_, family] = match
     return `${important}font-${family}`
   }
