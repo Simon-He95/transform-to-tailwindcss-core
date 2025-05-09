@@ -12,6 +12,10 @@ describe('text', () => {
     expect(toTailwindcss('text-align:center')).toBe('text-center')
   })
 
+  it('text-align:inherit', () => {
+    expect(toTailwindcss('text-align: inherit')).toBe('text-align-inherit')
+  })
+
   it('text-ellipsis', () => {
     expect(toTailwindcss('text-overflow: ellipsis;')).toBe('text-ellipsis')
   })

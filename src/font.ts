@@ -3,8 +3,11 @@ import { getVal, joinWithUnderLine, transformImportant } from './utils'
 export function font(key: string, val: string) {
   const [value, important] = transformImportant(val)
 
-  if (key === 'font-size')
+  if (key === 'font-size') {
+    if (['inherit', 'initial', 'revert', 'unset', 'revert-layer'].includes(value))
+      return `${important}font-size-${value}`
     return `${important}text${getVal(value)}`
+  }
   if (key === 'font-weight')
     return `${important}font-${value}`
   if (key === 'font-family') {

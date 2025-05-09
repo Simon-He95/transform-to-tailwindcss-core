@@ -10,6 +10,9 @@ describe('font-size', () => {
   it('px', () => {
     expect(toTailwindcss('font-size: 10px')).toBe('text-[10px]')
   })
+    it('inherit', () => {
+    expect(toTailwindcss('font-size: inherit')).toBe('font-size-inherit')
+  })
 })
 
 describe('font', () => {
