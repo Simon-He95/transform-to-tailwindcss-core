@@ -1,5 +1,6 @@
 import { getFirstName, transformImportant } from './utils'
 
+const validKey = ['box-shadow', 'drop-shadow']
 export function box(key: string, val: string) {
   // eslint-disable-next-line prefer-const
   let [value, important] = transformImportant(val)
@@ -9,7 +10,9 @@ export function box(key: string, val: string) {
   if (key === 'box-sizing')
     return `${important}box-${getFirstName(value)}`
 
-  return `${important}shadow-[${value
-    .split(' ')
-    .join('_')}]`
+  if (validKey.includes(key)) {
+    return `${important}shadow-[${value
+      .split(' ')
+      .join('_')}]`
+  }
 }

@@ -80,4 +80,14 @@ describe('transformStyleToTailwindcss', () => {
       'text-[#fff] text-[16px]',
     )
   })
+
+  it('not matched', () => {
+    expect(transformStyleToTailwindcss(`width: 240px;display: inline-flex;-ms-flex-negative: 0;flex-shrink: 0;-webkit-box-flex: 1;-ms-flex-positive: 1;position: relative;`)[1]).toMatchInlineSnapshot(`
+      [
+        "-ms-flex-negative: 0",
+        "-webkit-box-flex: 1",
+        "-ms-flex-positive: 1",
+      ]
+    `)
+  })
 })
