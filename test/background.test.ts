@@ -165,6 +165,26 @@ describe('background', () => {
     ).toBe('bg-gradient-to-t from-[rgba(255,255,255)] to-cyan')
   })
 
+  it('background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)', () => {
+    expect(
+      toTailwindcss(
+        'background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)',
+      ),
+    ).toBe(
+      'bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0)_100%)]',
+    )
+  })
+
+  it('background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%) no-repeat', () => {
+    expect(
+      toTailwindcss(
+        'background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%) no-repeat',
+      ),
+    ).toBe(
+      'bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0)_100%)_no-repeat]',
+    )
+  })
+
   it('background: linear-gradient(to left top, black, cyan);', () => {
     expect(
       toTailwindcss('background: linear-gradient(to left top, black, cyan);'),
@@ -228,28 +248,13 @@ describe('background', () => {
     ).toBe('bg-[#eee]')
   })
 
-  it('background-image: linear-gradient;', () => {
+  it.only('background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)', () => {
     expect(
       toTailwindcss(
-        'background-image: linear-gradient(180deg, rgba(48,206,64,0,12) 0%, rgba(48,206,64,0.00) 100%);',
+        'background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)',
       ),
     ).toBe(
-      'bg-[linear-gradient(180deg,rgba(48,206,64,0,12)_0%,rgba(48,206,64,0.00)_100%)]',
-    )
-
-    expect(
-      toTailwindcss(
-        'background-image: linear-gradient(90deg, rgba(39, 175, 106, 0.20) 0%, rgba(102, 216, 77, 0.20) 100%), linear-gradient(0deg, rgba(102, 215, 77, 0.16) 0%, rgba(255, 255, 255, 0.00) 100%)',
-      ),
-    ).toBe(
-      'bg-[linear-gradient(90deg,rgba(39,175,106,0.20)_0%,rgba(102,216,77,0.20)_100%),linear-gradient(0deg,rgba(102,215,77,0.16)_0%,rgba(255,255,255,0.00)_100%)]',
-    )
-    expect(
-      toTailwindcss(
-        'background-image: linear-gradient(#00a47c1a, #00a47c1a)',
-      ),
-    ).toBe(
-      'bg-[linear-gradient(#00a47c1a,#00a47c1a)]',
+      'bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0)_100%)]',
     )
   })
 

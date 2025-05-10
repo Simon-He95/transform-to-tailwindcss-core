@@ -1,9 +1,9 @@
-import { commaReplacer, getVal, isDynamic, isRgb, isSize, joinWithUnderLine, linearGradientReg, otherGradientReg, transformImportant } from './utils'
+import { commaReplacer, getVal, isDynamic, isRgb, isSize, joinWithUnderLine, linearGradientReg, linearGradientReg1, otherGradientReg, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
   'background-attachment',
-  'background-image',
+  'background-position',
 ]
 
 export function background(key: string, val: string) {
@@ -20,32 +20,41 @@ export function background(key: string, val: string) {
   if (backgroundMap.includes(key))
     return `${important}bg${getVal(value, joinWithUnderLine)}`
 
-  if (key === 'background') {
+  if (['background', 'background-image'].includes(key)) {
     if (isSize(value))
       return `${important}bg${getVal(value, transformSpaceToLine, 'position:')}`
+    const temp = value.replace(/rgba?\([^)]+\)/g, 'temp')
+    if (/\)\s*,/.test(temp))
+      return `bg-[${matchMultipleBgAttrs(value)}]`
     if (value.startsWith('linear-gradient')) {
       // 区分rgba中的,和linear-gradient中的,
       const newValue = value.replace(/rgba?\(([^)]+)\)/g, (all, v) =>
         all.replace(v, v.replace(/\s*,\s*/g, commaReplacer)))
 
       const matcher = newValue.match(linearGradientReg)
-      if (!matcher)
-        return
+      if (matcher) {
+        let [direction, from, via, to] = matcher.slice(1)
 
-      let [direction, from, via, to] = matcher.slice(1)
+        direction = direction
+          .split(' ')
+          .map(item => item[0])
+          .join('')
 
-      direction = direction
-        .split(' ')
-        .map(item => item[0])
-        .join('')
+        return direction
+          ? `bg-gradient-to-${direction}${getLinearGradientPosition(
+            from,
+            via,
+            to,
+          )}`
+          : getLinearGradientPosition(from, via, to)
+      }
+      const matcher1 = newValue.match(linearGradientReg1)
+      if (!matcher1) {
+        // 直接使用-[处理]
+        return `bg-[${matchMultipleBgAttrs(value)}]`
+      }
 
-      return direction
-        ? `bg-gradient-to-${direction}${getLinearGradientPosition(
-          from,
-          via,
-          to,
-        )}`
-        : getLinearGradientPosition(from, via, to)
+      return `bg-gradient-linear bg-gradient-[${matcher1[1]}${matcher1[2] ? `,${matcher1[2].replace(/\s+/, '_').replaceAll(commaReplacer, ',')}` : ''},${matcher1[3].replace(/\s+/, '_').replaceAll(commaReplacer, ',')}]`
     }
     else if (/^(?:radial|conic)-gradient/.test(value)) {
       // 区分rgba中的,和linear-gradient中的,
@@ -168,4 +177,21 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     }
   }
   return result
+}
+
+const CONSTANTFLAG = '__transform_to_unocss__'
+function matchMultipleBgAttrs(value: string) {
+  const map: any = {}
+  let i = 0
+  value = value.replace(/(rgba?|hsla?|lab|lch|hwb|color)\(\)*\)/, (_) => {
+    map[i++] = _
+    return `${CONSTANTFLAG}${i}}`
+  })
+  value = value.split(/\)\s*,/).map(item =>
+    `${item.replace(/\s*,\s*/g, ',').replace(/\s+/g, '_')}`,
+  ).join('),')
+  Object.keys(map).forEach((key) => {
+    value = value.replace(`${CONSTANTFLAG}${key}}`, map[key])
+  })
+  return value
 }

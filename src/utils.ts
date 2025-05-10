@@ -167,7 +167,6 @@ export const linearGradientReg
 
 export const linearGradientReg1
   = /linear-gradient\(\s*([^,]*),?([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/
-
 export const otherGradientReg
   = /(radial|conic)-gradient\(([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/
 export const commaReplacer = '__comma__'
