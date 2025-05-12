@@ -1,7 +1,7 @@
 {
   "name": "transform-to-tailwindcss-core",
   "type": "module",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "packageManager": "pnpm@10.10.0",
   "description": "A core library to transform CSS or style objects to Tailwind CSS utility classes. Simplifies migration and integration with Tailwind CSS.",
   "author": "Simon He",
