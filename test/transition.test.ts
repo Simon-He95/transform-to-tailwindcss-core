@@ -37,11 +37,15 @@ describe('transition', () => {
   })
 
   it('transition-duration: 75ms;', () => {
-    expect(toTailwindcss('transition-duration: 75ms;')).toBe('duration-75')
+    expect(toTailwindcss('transition-duration: 75ms;')).toBe('duration-[75ms]')
   })
 
-  it('transition-delay: 75ms;', () => {
-    expect(toTailwindcss('transition-delay: 75ms;')).toBe('delay-75')
+  it('transition-duration: 75ms;', () => {
+    expect(toTailwindcss('transition-delay: 75ms;')).toBe('delay-[75ms]')
+  })
+
+    it('transition-delay: 0.3s;', () => {
+    expect(toTailwindcss('transition-duration: 0.3s;')).toBe('duration-[0.3s]')
   })
 
   it('transition-timing-function: linear', () => {

@@ -19,13 +19,13 @@ describe('background', () => {
 
   it('background-size:28rpx 28rpx', () => {
     expect(toTailwindcss('background-size:28rpx 28rpx')).toBe(
-      'bg-[28rpx_28rpx]',
+      'bg-[length:28rpx_28rpx]',
     )
   })
 
   it('background-size:100% auto', () => {
     expect(toTailwindcss('background-size:100% auto')).toBe(
-      'bg-[100%_auto]',
+      'bg-[length:100%_auto]',
     )
   })
 
@@ -248,13 +248,31 @@ describe('background', () => {
     ).toBe('bg-[#eee]')
   })
 
-  it.only('background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)', () => {
+  it('background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)', () => {
     expect(
       toTailwindcss(
         'background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%)',
       ),
     ).toBe(
       'bg-[linear-gradient(90deg,rgba(255,255,255,0)_0%,rgba(255,255,255,0.5)_50%,rgba(255,255,255,0)_100%)]',
+    )
+  })
+
+  it('background-position: 0 0, 5px 5px', () => {
+    expect(toTailwindcss('background-position: 0 0, 5px var(--xxxx, 5px)')).toBe(
+      'bg-[position:0_0,5px_var(--xxxx,5px)]',
+    )
+  })
+
+  it('background: left 5% / 15% 60% repeat-x url("/shared-assets/images/examples/star.png");', () => {
+    expect(toTailwindcss('background: left 5% / 15% 60% repeat-x   url("/shared-assets/images/examples/star.png");')).toBe(
+      'bg-[position:left_5%] bg-[length:15%_60%] bg-repeat-x bg-[url(/shared-assets/images/examples/star.png)]',
+    )
+  })
+
+  it('background: 0 0, 5px 5px', () => {
+    expect(toTailwindcss('background: 0 0, 5px 5px url("/shared-assets/images/examples/star.png") no-repeat')).toBe(
+      'bg-[position:0_0,5px_5px] bg-[url(/shared-assets/images/examples/star.png)] bg-no-repeat',
     )
   })
 

@@ -20,7 +20,7 @@ export function transition(key: string, val: string) {
     return `${important}transition-${value}`
   }
   if (times.includes(key))
-    return `${key.split('-')[1]}-${value.slice(0, -2)}`
+    return `${important}${key.split('-')[1]}${getVal(value)}`
 }
 
 function transformTransition(v: string, important: string) {

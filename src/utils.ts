@@ -85,11 +85,11 @@ export function getHundred(n: string) {
 }
 
 export function joinWithLine(s: string) {
-  return s.replace(/\s+/, ' ').split(' ').join('-')
+  return s.replace(/\s+/g, ' ').split(/\s/g).join('-')
 }
 
 export function joinWithUnderLine(s: string) {
-  return s.replace(/\s+/, ' ').split(' ').join('_')
+  return s.replace(/\s+/g, ' ').split(/\s/g).join('_')
 }
 
 /**
@@ -111,9 +111,9 @@ export function trim(s: string, type: TrimType = 'around'): string {
 }
 
 export function transformImportant(v: string) {
-  v = v.replace(/\s+/, ' ')
+  v = v.replace(/\s+/g, ' ')
     .replace(/\s*,\s*/g, ',')
-    .replace(/\s*\/\s*/, '/')
+    .replace(/\s*\/\s*/g, '/')
   if (/rgb/.test(v)) {
     v = v.replace(/rgba?\(([^)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
