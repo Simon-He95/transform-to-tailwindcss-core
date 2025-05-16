@@ -123,7 +123,7 @@ export function transformStyleToTailwindPre(styles: string) {
   const styleToObj = styles.split(';').reduce((r: Record<string, string>, item) => {
     const [key, value] = item.split(':')
     // 导入规则函数去转换，如果没有转换成功就返回原来的值，并且从结果中删除
-    if (key.trim() && value.trim()) {
+    if (key.trim() && value?.trim()) {
       r[key.trim()] = value.trim()
     }
     return r
