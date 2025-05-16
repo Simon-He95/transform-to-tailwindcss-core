@@ -65,8 +65,12 @@ export function isEnv(s: string) {
   return /^env\(/.test(s)
 }
 
+export function isFraction(s: string) {
+  return /^\d+\/\d+$/.test(s)
+}
+
 export function isDynamic(val: string) {
-  return isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val)
+  return isFraction(val) || isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val)
 }
 
 export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {

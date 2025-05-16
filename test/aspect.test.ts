@@ -13,4 +13,8 @@ describe('aspect', () => {
   it('aspect-ratio: 16 / 9;', () => {
     expect(toTailwindcss('aspect-ratio: 16 / 9;')).toBe('aspect-[16/9]')
   })
+
+    it('aspect-ratio: var(--aspect-ratio-video);', () => {
+    expect(toTailwindcss('aspect-ratio: var(--aspect-ratio-video);')).toBe('aspect-[var(--aspect-ratio-video)]')
+  })
 })

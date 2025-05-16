@@ -17,4 +17,8 @@ describe('align', () => {
   it('align-self: flex-start;', () => {
     expect(toTailwindcss('align-self: flex-start;')).toBe('self-start')
   })
+
+    it('align-items: safe flex-end;', () => {
+    expect(toTailwindcss('align-items: safe flex-end;')).toBe('items-end-safe')
+  })
 })

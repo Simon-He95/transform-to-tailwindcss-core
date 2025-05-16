@@ -1,11 +1,20 @@
-import { getVal, joinWithUnderLine, transformImportant } from './utils'
+import { joinWithUnderLine, transformImportant } from './utils'
 
+const animationMap = [
+  'animation',
+  'animation-name',
+  'animation-duration',
+  'animation-delay',
+  'animation-timing-function',
+  'animation-iteration-count',
+  'animation-direction',
+  'animation-fill-mode',
+  'animation-play-state',
+]
 export function animation(key: string, val: string) {
+  if (!animationMap.includes(key))
+    return
   const [value, important] = transformImportant(val)
 
-  if (key === 'animation-delay')
-    return `${important}animate${getVal(value)}`
-  if (key === 'animation')
-    return `${important}animate-[${getVal(value, joinWithUnderLine).slice(1)}]`
-  return `${important}animate-[${value}]`
+  return `${important}animate-[${joinWithUnderLine(value)}]`
 }
