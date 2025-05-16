@@ -7,13 +7,30 @@ describe('content', () => {
   })
 
   it('content: "aa";', () => {
-    expect(toTailwindcss('content: "aa";')).toBe('content-["aa"]')
+    expect(toTailwindcss('content: "aa";')).toBe('content-[\'aa\']')
   })
 
   it('content: " ";', () => {
     expect(toTailwindcss('content: " ";')).toBe('content-[\'_\']')
   })
+
   it('content: \' \'', () => {
-    expect(toTailwindcss('content: \' \';')).toBe('content-[\'_\']')
+    expect(toTailwindcss('content: \'   \';')).toBe('content-[\'___\']')
+  })
+
+  it('content: ""', () => {
+    expect(toTailwindcss('content: "";')).toBe('content-[\'\']')
+  })
+
+  it('content: "\/"', () => {
+    expect(toTailwindcss('content: "/";')).toBe('content-[\'/\']')
+  })
+
+  it('content: "\'""\'"', () => {
+    expect(toTailwindcss('content: "\'""\'";')).toBe('content-[\'\'""\'\']')
+  })
+
+  it('content-visibility', () => {
+    expect(toTailwindcss('content-visibility: revert-layer;')).toBe('content-visibility-revert-layer')
   })
 })

@@ -1,5 +1,13 @@
 import { getVal, joinWithUnderLine, transformImportant } from './utils'
 
+const fontMap = [
+  'font',
+  'font-size',
+  'font-weight',
+  'font-family',
+  'font-style',
+  'font-variant-numeric',
+]
 export function font(key: string, val: string) {
   const [value, important] = transformImportant(val)
 

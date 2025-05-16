@@ -1,6 +1,23 @@
 import { getVal, positionMap, transformImportant } from './utils'
 
+const textMap = [
+  'text-align',
+  'text-align-last',
+  'text-decoration-line',
+  'text-decoration-style',
+  'text-decoration-color',
+  'text-decoration-thickness',
+  'text-indent',
+  'text-underline-offset',
+  'text-transform',
+  'text-wrap',
+  'text-overflow',
+  'text-justify',
+  'text-shadow',
+]
 export function text(key: string, val: string) {
+  if (!textMap.includes(key))
+    return
   const [value, important] = transformImportant(val)
   if (positionMap.includes(value))
     return `${important}text-${value}`

@@ -49,15 +49,21 @@ describe('backdrop-filter', () => {
     expect(toTailwindcss('backdrop-filter: opacity(0);')).toBe(
       'backdrop-opacity-0',
     )
+
+        expect(toTailwindcss('backdrop-filter: opacity(var(--opacity));')).toBe(
+      'backdrop-opacity-[var(--opacity)]',
+    )
   })
 
   it('saturate', () => {
     expect(toTailwindcss('backdrop-filter: saturate(0);')).toBe(
       'backdrop-saturate-0',
     )
+    expect(toTailwindcss('backdrop-filter: saturate(var(--saturate));')).toBe('backdrop-saturate-[var(--saturate)]')
   })
 
   it('sepia', () => {
     expect(toTailwindcss('backdrop-filter: sepia(0);')).toBe('backdrop-sepia-0')
+    expect(toTailwindcss('backdrop-filter: sepia(var(--sepia));')).toBe('backdrop-sepia-[var(--sepia)]')
   })
 })

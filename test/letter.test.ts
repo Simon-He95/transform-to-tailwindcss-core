@@ -3,10 +3,10 @@ import { toTailwindcss } from '../src/toTailwindcss'
 
 describe('letter', () => {
   it('px', () => {
-    expect(toTailwindcss('letter-spacing: -5px;')).toBe('tracking--5px')
+    expect(toTailwindcss('letter-spacing: -5px;')).toBe('tracking-[-5px]')
   })
   it('em', () => {
-    expect(toTailwindcss('letter-spacing: -5em;')).toBe('tracking--5em')
+    expect(toTailwindcss('letter-spacing: -5em;')).toBe('tracking-[-5em]')
   })
   it('rem', () => {
     expect(toTailwindcss('width:10rem')).toMatchInlineSnapshot('"w-[10rem]"')

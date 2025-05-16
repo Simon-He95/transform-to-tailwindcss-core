@@ -13,4 +13,7 @@ describe('justify', () => {
   it('justify-self: auto;', () => {
     expect(toTailwindcss('justify-self: auto;')).toBe('justify-self-auto')
   })
+  it('justify-items: safe end;', () => {
+    expect(toTailwindcss('justify-items: safe flex-end;')).toBe('justify-items-end-safe')
+  })
 })

@@ -50,7 +50,7 @@ describe('width', () => {
     expect(toTailwindcss('min-width: calc(100% - 50px);')).toBe('min-w-[calc(100%-50px)]')
   })
   it('min-width calc not space', () => {
-    expect(toTailwindcss('min-width:calc(100%-50px)')).toBe('min-w-[calc(100%-50px)]')
+    expect(toTailwindcss('min-width:calc(100% - 50px)')).toBe('min-w-[calc(100%-50px)]')
   })
   it('min-width calc space', () => {
     expect(toTailwindcss('min-width:calc(100%  -  50px)')).toBe(
@@ -67,7 +67,7 @@ describe('width', () => {
     expect(toTailwindcss('max-width:calc(100% - 50px)')).toBe('max-w-[calc(100%-50px)]')
   })
   it('max-width calc not space', () => {
-    expect(toTailwindcss('max-width:calc(100%-50px)')).toBe('max-w-[calc(100%-50px)]')
+    expect(toTailwindcss('max-width:calc(100% - 50px)')).toBe('max-w-[calc(100%-50px)]')
   })
   it('max-width calc space', () => {
     expect(toTailwindcss('max-width:calc(100%  -  50px)')).toBe(

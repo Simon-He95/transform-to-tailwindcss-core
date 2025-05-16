@@ -33,7 +33,7 @@ describe('height', () => {
     )
   })
   it('calc not space', () => {
-    expect(toTailwindcss(' height:calc(100%-50px)')).toBe('h-[calc(100%-50px)]')
+    expect(toTailwindcss(' height:calc(100% - 50px)')).toBe('h-[calc(100%-50px)]')
   })
 
   it('calc space', () => {
@@ -55,7 +55,7 @@ describe('height', () => {
     )
   })
   it('min-height calc not space', () => {
-    expect(toTailwindcss(' min-height:calc(100%-50px)')).toBe('min-h-[calc(100%-50px)]')
+    expect(toTailwindcss(' min-height:calc(100% - 50px)')).toBe('min-h-[calc(100%-50px)]')
   })
 
   it('min-height calc space', () => {
@@ -75,7 +75,7 @@ describe('height', () => {
     )
   })
   it('max-height calc not space', () => {
-    expect(toTailwindcss(' max-height:calc(100%-50px)')).toBe('max-h-[calc(100%-50px)]')
+    expect(toTailwindcss(' max-height:calc(100% - 50px)')).toBe('max-h-[calc(100%-50px)]')
   })
 
   it('max-height calc space', () => {

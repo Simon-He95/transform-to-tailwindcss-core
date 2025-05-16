@@ -11,19 +11,19 @@ describe('scroll', () => {
   })
 
   it('scroll-margin: 0px;', () => {
-    expect(toTailwindcss('scroll-margin: 0px;')).toBe('scroll-m-0px')
+    expect(toTailwindcss('scroll-margin: 0px;')).toBe('scroll-m-[0px]')
   })
 
   it('scroll-margin-top: 0px;', () => {
-    expect(toTailwindcss('scroll-margin-top: 0px;')).toBe('scroll-mt-0px')
+    expect(toTailwindcss('scroll-margin-top: 0px;')).toBe('scroll-mt-[0px]')
   })
 
   it('scroll-padding: 0px;', () => {
-    expect(toTailwindcss('scroll-padding: 0px;')).toBe('scroll-p-0px')
+    expect(toTailwindcss('scroll-padding: 0px;')).toBe('scroll-p-[0px]')
   })
 
   it('scroll-padding-top: 0px;', () => {
-    expect(toTailwindcss('scroll-padding-top: 0px;')).toBe('scroll-pt-0px')
+    expect(toTailwindcss('scroll-padding-top: 0px;')).toBe('scroll-pt-[0px]')
   })
 
   it('scroll-snap-align: start;', () => {

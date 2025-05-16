@@ -1,35 +1,43 @@
-import { commaReplacer, getVal, isDynamic, isRgb, isSize, joinWithLine, joinWithUnderLine, linearGradientReg, linearGradientReg1, otherGradientReg, transformImportant } from './utils'
+import { commaReplacer, getVal, isRgb, isSize, isVar, joinWithLine, joinWithUnderLine, linearGradientReg, linearGradientReg1, otherGradientReg, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
   'background-attachment',
+  'background-position',
+  'background-size',
+  'background-image',
+  'background',
+  'background-blend-mode',
+  'background-origin',
+  'background-clip',
+  'background-repeat',
 ]
 
 const lengthRe = '\\d*\\.?\\d+(?:px|em|rem|%|vw|vh)?'
 const positionPair = `(${lengthRe})\\s+(${lengthRe})`
 const optimizedReg = new RegExp(`${positionPair}\\s*,\\s*${positionPair}`)
 
-export function background(key: string, val: string): string {
+export function background(key: string, val: string): string | undefined {
+  if (!backgroundMap.includes(key))
+    return
   let [value, important] = transformImportant(val)
 
   if (key === 'background-size') {
     return /\d/.test(value)
       ? `${important}bg${getVal(value, joinWithUnderLine, 'length:', true)}`
-      : `${important}bg${getVal(value, joinWithLine)}`
+      : `${important}bg${getVal(value, joinWithLine, 'length:')}`
   }
   if (key === 'background-position') {
     if (/\d/.test(value))
       return `${important}bg${getVal(value, joinWithUnderLine, 'position:')}`
-    return `${important}bg${getVal(value, (v: string) => isDynamic(value) ? joinWithUnderLine(v) : `[${joinWithUnderLine(v)}]`)}`
+    return `${important}bg${getVal(value, joinWithUnderLine, 'position:')}`
   }
 
-  if (backgroundMap.includes(key))
+  if ([
+    'background-color',
+    'background-attachment',
+  ].includes(key)) {
     return `${important}bg${getVal(value, joinWithUnderLine)}`
-
-  if (key === 'background-position') {
-    if (/\d/.test(value))
-      return `${important}bg${getVal(value, joinWithUnderLine, 'position:')}`
-    return `${important}bg${getVal(value, joinWithLine)}`
   }
 
   if (['background', 'background-image'].includes(key)) {
@@ -221,11 +229,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     from = from.replaceAll(commaReplacer, ',')
     const [fromColor, fromPosition] = from.split(' ')
     if (fromPosition) {
-      result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor
+      result += ` from-${isRgb(fromColor) || isVar(fromColor) ? `[${fromColor}]` : fromColor
       } from-${fromPosition}`
     }
     else if (fromColor) {
-      result += ` from-${isRgb(fromColor) ? `[${fromColor}]` : fromColor}`
+      result += ` from-${isRgb(fromColor) || isVar(fromColor) ? `[${fromColor}]` : fromColor}`
     }
   }
 
@@ -234,11 +242,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [viaColor, viaPosition] = via
       .split(' ')
     if (viaPosition) {
-      result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor
+      result += ` via-${isRgb(viaColor) || isVar(viaColor) ? `[${viaColor}]` : viaColor
       } via-${viaPosition}`
     }
     else if (viaColor) {
-      result += ` via-${isRgb(viaColor) ? `[${viaColor}]` : viaColor}`
+      result += ` via-${isRgb(viaColor) || isVar(viaColor) ? `[${viaColor}]` : viaColor}`
     }
   }
 
@@ -247,11 +255,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [toColor, toPosition] = to
       .split(' ')
     if (toPosition) {
-      result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor
+      result += ` to-${isRgb(toColor) || isVar(toColor) ? `[${toColor}]` : toColor
       } to-${toPosition}`
     }
     else if (toColor) {
-      result += ` to-${isRgb(toColor) ? `[${toColor}]` : toColor}`
+      result += ` to-${isRgb(toColor) || isVar(toColor) ? `[${toColor}]` : toColor}`
     }
   }
   return result

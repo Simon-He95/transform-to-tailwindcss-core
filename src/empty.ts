@@ -1,11 +1,16 @@
 import { transformImportant } from './utils'
 
-const emptyMap: Record<string, string> = {
+const emptyKey: Record<string, string> = {
   show: 'visible',
   hide: 'hidden',
 }
+const emptyMap = [
+  'empty-cells',
+]
 export function empty(key: string, val: string) {
+  if (!emptyMap.includes(key))
+    return
   const [value, important] = transformImportant(val)
-
-  return `${important}table-empty-cells-${emptyMap[value] ?? value}`
+  if (emptyKey[value])
+    return `${important}table-empty-cells-${emptyKey[value] ?? value}`
 }

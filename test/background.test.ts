@@ -29,6 +29,12 @@ describe('background', () => {
     )
   })
 
+  it('background-size: var(--size)', () => {
+    expect(toTailwindcss('background-size: var(--size)')).toBe(
+      'bg-[length:var(--size)]',
+    )
+  })
+
   it('background:rgba(125, 188, 234) center center;', () => {
     expect(toTailwindcss('background:rgba(125, 188, 234, 0.5) center center')).toBe(
       'bg-[rgba(125,188,234,0.5)] bg-[position:center_center]',
@@ -54,15 +60,15 @@ describe('background', () => {
   })
   // size
   it('background-size:auto', () => {
-    expect(toTailwindcss('background-size:auto')).toBe('bg-auto')
+    expect(toTailwindcss('background-size:auto')).toBe('bg-[length:auto]')
   })
 
   it('background-size:cover', () => {
-    expect(toTailwindcss('background-size:cover')).toBe('bg-cover')
+    expect(toTailwindcss('background-size:cover')).toBe('bg-[length:cover]')
   })
 
   it('background-size:contain', () => {
-    expect(toTailwindcss('background-size:contain')).toBe('bg-contain')
+    expect(toTailwindcss('background-size:contain')).toBe('bg-[length:contain]')
   })
 
   it('background-size:50%', () => {
@@ -93,12 +99,18 @@ describe('background', () => {
 
   // position
   it('background-position:center', () => {
-    expect(toTailwindcss('background-position:center')).toBe('bg-[center]')
+    expect(toTailwindcss('background-position:center')).toBe('bg-[position:center]')
   })
 
   it('background-position:center center', () => {
     expect(toTailwindcss('background-position:center center')).toBe(
-      'bg-[center_center]',
+      'bg-[position:center_center]',
+    )
+  })
+
+  it('background-position: var(--position)', () => {
+    expect(toTailwindcss('background-position:  var(--position)')).toBe(
+      'bg-[position:var(--position)]',
     )
   })
 
@@ -141,6 +153,18 @@ describe('background', () => {
     )
   })
 
+  it('background-image: var(--image)', () => {
+    expect(toTailwindcss('background-image: var(--image)')).toBe(
+      'bg-[var(--image)]',
+    )
+  })
+
+  it('background-image: linear-gradient(to top, var(--tw-gradient-stops));', () => {
+    expect(toTailwindcss('background-image: linear-gradient(to top, var(--tw-gradient-stops));')).toBe(
+      'bg-gradient-to-t to-[var(--tw-gradient-stops)]',
+    )
+  })
+
   it('background: red', () => {
     expect(toTailwindcss('background: red')).toBe('bg-red')
   })
@@ -154,6 +178,12 @@ describe('background', () => {
   it('background-blend-mode: normal;', () => {
     expect(toTailwindcss('background-blend-mode: normal;')).toBe(
       'bg-blend-normal',
+    )
+  })
+
+  it('background-blend-mode: color-dodge;', () => {
+    expect(toTailwindcss('background-blend-mode: color-dodge;')).toBe(
+      'bg-blend-color-dodge',
     )
   })
 
@@ -239,7 +269,7 @@ describe('background', () => {
       'bg-gradient-conic from-#fff from-0.25turn via-#000 via-0.25turn to-#fff to-0.5turn',
     )
   })
-  
+
   it('background: #eee', () => {
     expect(
       toTailwindcss(
@@ -285,7 +315,7 @@ describe('background', () => {
       'bg-[var(--default,red)]',
     )
   })
-  
+
   it('background: var(--default, red);', () => {
     expect(
       toTailwindcss(
@@ -302,7 +332,7 @@ describe('background', () => {
         'background: var(--sim-col, linear-gradient(90deg, #25AE6A 0%, #68D94B 100%));',
       ),
     ).toBe(
-      'bg-[var(--sim-col,linear-gradient(90deg,#25AE6A,0%,#68D94B,100%))]',
+      'bg-[var(--sim-col,linear-gradient(90deg,#25AE6A_0%,#68D94B_100%))]',
     )
   })
 

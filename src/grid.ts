@@ -6,7 +6,23 @@ import {
   transformImportant,
 } from './utils'
 
+const gridMap = [
+  'grid',
+  'grid-row',
+  'grid-column',
+  'grid-template-columns',
+  'grid-template-rows',
+  'grid-auto-flow',
+  'grid-auto-columns',
+  'grid-auto-rows',
+  'grid-column-start',
+  'grid-column-end',
+  'grid-row-start',
+  'grid-row-end',
+]
 export function grid(key: string, val: string) {
+  if (!gridMap.includes(key))
+    return
   const [value, important] = transformImportant(val)
 
   if (key.startsWith('grid-template')) {

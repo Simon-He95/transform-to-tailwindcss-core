@@ -1,8 +1,18 @@
-import { getVal, transformImportant } from './utils'
+import { getLastName, getVal, transformImportant } from './utils'
 
 const times = ['transition-delay', 'transition-duration']
 
+const transitionMap = [
+  'transition',
+  'transition-property',
+  'transition-duration',
+  'transition-delay',
+  'transition-timing-function',
+  'transition-behavior',
+]
 export function transition(key: string, val: string) {
+  if (!transitionMap.includes(key))
+    return
   const [value, important] = transformImportant(val)
   if (key === 'transition-timing-function') {
     if (value === 'linear')
@@ -19,8 +29,22 @@ export function transition(key: string, val: string) {
       return `${important}transition-shadow`
     return `${important}transition-${value}`
   }
-  if (times.includes(key))
-    return `${important}${key.split('-')[1]}${getVal(value)}`
+  if (key === 'transition-behavior')
+    return `${important}transition-${getLastName(value)}`
+
+  const _val = getVal(value)
+
+  if (_val === `-${value}` && times.includes(key)) {
+    let num = value.trim()
+    if (num.endsWith('ms')) {
+      num = num.replace(/ms$/, '')
+    }
+    else if (num.endsWith('s')) {
+      num = (Number.parseFloat(num.replace(/s$/, '')) * 1000).toString()
+    }
+    return `${important}${key.split('-')[1]}-${num}`
+  }
+  return `${important}${key.split('-')[1]}${_val}`
 }
 
 function transformTransition(v: string, important: string) {

@@ -73,7 +73,8 @@ export function isDynamic(val: string) {
   return isFraction(val) || isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val)
 }
 
-export function getVal(val: string, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
+export function getVal(val: string | number, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
+  val = String(val)
   if (isDynamicFlag || isDynamic(val))
     return `-[${prefix}${trim(transform ? transform(val) : val, 'all').replace(/['"]/g, '')}]`
   return prefix
@@ -81,11 +82,11 @@ export function getVal(val: string, transform?: (v: string) => string, prefix = 
     : `-${transform ? transform(val) : val}`
 }
 
-export function getHundred(n: string) {
+export function getHundred(n: string): string | number {
   if (n.endsWith('%') || n.endsWith('deg') || n === '0')
     return n
   const v = +n * 100
-  return Number.isNaN(v) ? `${v}` : `${v}%`
+  return Number.isNaN(v) ? v : `${v}%`
 }
 
 export function joinWithLine(s: string) {
@@ -114,10 +115,18 @@ export function trim(s: string, type: TrimType = 'around'): string {
   return s
 }
 
-export function transformImportant(v: string) {
-  v = v.replace(/\s+/g, ' ')
-    .replace(/\s*,\s*/g, ',')
-    .replace(/\s*\/\s*/g, '/')
+export function transformImportant(v: string, trimSpace = true) {
+  if (trimSpace) {
+    v = v.replace(/\s+/g, ' ')
+      .replace(/\s*,\s*/g, ',')
+      .replace(/\s*\/\s*/g, '/')
+  }
+
+  if (/calc\([^)]+\)/.test(v)) {
+    v = v.replace(/calc\(([^)]+)\)/g, (all, k) => {
+      return all.replace(k, k.replace(/\s/g, ''))
+    })
+  }
   if (/rgb/.test(v)) {
     v = v.replace(/rgba?\(([^)]+)\)/g, (all, k) => {
       const _k = k.trim().split(' ')
@@ -134,8 +143,7 @@ export function transformImportant(v: string) {
 
   if (/var\([^)]+\)/.test(v)) {
     v = v.replace(/var\(([^)]+)\)/g, (all, k) => {
-      const _k = k.trim().split(' ')
-      return all.replace(k, _k.map((i: string, index: number) => i.endsWith(',') ? i : i + ((_k.length - 1 === index) ? '' : ',')).join(''))
+      return all.replace(k, k.replace(/\s/g, '_'))
     })
   }
 
