@@ -25,19 +25,22 @@ describe('font', () => {
 
 describe('font-weight', () => {
   it('100', () => {
-    expect(toTailwindcss('font-weight: 100')).toBe('font-100')
+    expect(toTailwindcss('font-weight: 100')).toBe('font-[weight:100]')
   })
   it('bold', () => {
-    expect(toTailwindcss('font-weight: bold')).toBe('font-bold')
+    expect(toTailwindcss('font-weight: bold')).toBe('font-[weight:bold]')
+  })
+    it('bold', () => {
+    expect(toTailwindcss('font-weight: var(--weight, 800)')).toBe('font-[weight:var(--weight,800)]')
   })
 })
 
 describe('font-style', () => {
   it('italic', () => {
-    expect(toTailwindcss('font-style: italic;')).toBe('font-italic')
+    expect(toTailwindcss('font-style: italic;')).toBe('italic')
   })
   it('normal', () => {
-    expect(toTailwindcss('font-style: normal;')).toBe('font-not-italic')
+    expect(toTailwindcss('font-style: normal;')).toBe('not-italic')
   })
 })
 
@@ -56,6 +59,14 @@ describe('font-family', () => {
         '  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;',
       ),
     ).toBe('font-mono')
+  })
+
+    it('var', () => {
+    expect(
+      toTailwindcss(
+        '  font-family: var(--family);',
+      ),
+    ).toBe('font-[family-name:var(--family)]')
   })
 })
 
