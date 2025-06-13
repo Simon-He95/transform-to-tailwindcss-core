@@ -85,7 +85,7 @@ export function getVal(val: string | number, transform?: (v: string) => string, 
 export function getHundred(n: string): string | number {
   if (n.endsWith('%') || n.endsWith('deg') || n === '0')
     return n
-  const v = +n * 100
+  const v = Math.round(Number(n) * 100)
   return Number.isNaN(v) ? v : `${v}%`
 }
 
