@@ -3,8 +3,12 @@
   "type": "module",
   "version": "0.0.37",
   "packageManager": "pnpm@10.10.0",
-  "description": "A core library to transform CSS or style objects to Tailwind CSS utility classes. Simplifies migration and integration with Tailwind CSS.",
-  "author": "Simon He",
+  "description": "🎨 A powerful, lightweight core library to transform CSS styles or style objects into Tailwind CSS utility classes. Perfect for migration projects and dynamic style generation.",
+  "author": {
+    "name": "Simon He",
+    "email": "hejian123@qq.com",
+    "url": "https://github.com/Simon-He95"
+  },
   "license": "MIT",
   "funding": "https://github.com/sponsors/Simon-He95",
   "homepage": "https://github.com/Simon-He95/transform-to-tailwindcss-core#readme",
@@ -22,13 +26,24 @@
     "style",
     "migration",
     "core",
-    "library"
+    "library",
+    "typescript",
+    "browser",
+    "nodejs",
+    "css-to-tailwind",
+    "utility-classes",
+    "frontend",
+    "web-development",
+    "css-parser",
+    "responsive-design",
+    "zero-dependencies"
   ],
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "main": "./dist/index.js",
@@ -43,11 +58,18 @@
     }
   },
   "bin": {
-    "run": "./cli.mjs"
+    "transform-to-tailwind": "./cli.mjs"
   },
   "files": [
-    "dist"
+    "dist",
+    "cli.mjs",
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md"
   ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "build": "tsdown ./src/index.ts",
     "dev": "npm run build -- --watch src",
@@ -58,7 +80,10 @@
     "release": "bumpp && npm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
-    "typecheck": "tsc --noEmit"
+    "test:coverage": "vitest --coverage",
+    "typecheck": "tsc --noEmit",
+    "ci": "pnpm run lint && pnpm run typecheck && pnpm run test",
+    "clean": "rimraf dist"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.0",
