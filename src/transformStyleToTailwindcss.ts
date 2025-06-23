@@ -17,7 +17,6 @@ export function transformStyleToTailwindcss(
         .filter(Boolean)
         .reduce((result: string, cur: string) => {
           const key = cur.replaceAll(browserReg, '').trim()
-          console.log({ key })
           if (cache.has(key))
             return result
           cache.add(key)
