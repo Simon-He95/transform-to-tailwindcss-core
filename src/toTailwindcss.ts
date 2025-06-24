@@ -46,6 +46,7 @@ import { white } from './white'
 import { will } from './will'
 import { word } from './word'
 import { writing } from './writing'
+import { z } from './z'
 
 const typeMap: any = {
   animation,
@@ -75,7 +76,7 @@ const typeMap: any = {
   right: top,
   bottom: top,
   visibility: display,
-  z: size,
+  z,
   flex,
   order: float,
   grid,

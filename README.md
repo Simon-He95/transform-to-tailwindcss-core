@@ -41,7 +41,7 @@ const [tailwindClasses, unconverted] = transformStyleToTailwindcss(
 )
 
 console.log(tailwindClasses) // "text-red-500 text-base m-2.5"
-console.log(unconverted)     // [] (empty if all styles converted)
+console.log(unconverted) // [] (empty if all styles converted)
 
 // With rem units
 const [classes, unconverted] = transformStyleToTailwindcss(
@@ -53,7 +53,7 @@ const [classes, unconverted] = transformStyleToTailwindcss(
 const [classes, unconverted] = transformStyleToTailwindcss(
   'display: flex; justify-content: center',
   false, // rem conversion
-  true   // debug mode - shows conversion process
+  true // debug mode - shows conversion process
 )
 ```
 
@@ -119,11 +119,11 @@ const [classes, unconverted] = transformStyleToTailwindcss(
   'color: red; custom-property: value; font-size: 16px'
 )
 
-console.log(classes)     // "text-red-500 text-base"
+console.log(classes) // "text-red-500 text-base"
 console.log(unconverted) // ["custom-property: value"]
 
 // You can combine them for fallback
-const finalStyles = unconverted.length > 0 
+const finalStyles = unconverted.length > 0
   ? `${classes} [&]:${unconverted.join('; ')}`
   : classes
 ```

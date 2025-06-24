@@ -1,7 +1,6 @@
 import { getFirstName, getVal, isDynamic, transformImportant } from './utils'
 
 const sizeMap = [
-  'z-index',
   'width',
   'height',
 ]
