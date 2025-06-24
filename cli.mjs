@@ -1,5 +1,7 @@
 #!/usr/bin/env node --no-warnings
 
+import process from 'node:process'
+// eslint-disable-next-line antfu/no-import-dist
 import { transformStyleToTailwindcss } from './dist/index.js'
 
 const args = process.argv.slice(2)
@@ -27,7 +29,7 @@ Documentation: https://github.com/Simon-He95/transform-to-tailwindcss-core#readm
 }
 
 function showVersion() {
-  import('./package.json', { assert: { type: 'json' } })
+  import('./package.json')
     .then(pkg => console.log(`v${pkg.default.version}`))
     .catch(() => console.log('Version not found'))
 }
@@ -54,15 +56,16 @@ if (!cssStyles) {
 
 try {
   const [tailwindClasses, unconverted] = transformStyleToTailwindcss(cssStyles, isRem, isDebug)
-  
+
   console.log('✅ Transformation completed!')
   console.log(`📝 Input: ${cssStyles}`)
   console.log(`🎨 Tailwind: ${tailwindClasses}`)
-  
+
   if (unconverted.length > 0) {
     console.log(`⚠️  Unconverted: ${unconverted.join('; ')}`)
   }
-} catch (error) {
+}
+catch (error) {
   console.error('❌ Error during transformation:', error.message)
   process.exit(1)
 }
