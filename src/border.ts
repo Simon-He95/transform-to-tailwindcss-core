@@ -62,7 +62,7 @@ export function border(key: string, val: string) {
     const keys = key.split('-')
     if (keys.slice(-1)[0] === 'radius')
       return value.split(' ').map(v => `${important}rounded-${keys.slice(1, -1).map(s => s[0]).join('')}${getVal(v)}`).join(' ')
-    return value.split(' ').map(v => `${important}border-${key.split('-')[1][0]}${getVal(v)}`).join(' ')
+    return value.split(' ').filter(item => item !== 'solid').map(v => `${important}border-${key.split('-')[1][0]}${getVal(v)}`).join(' ')
   }
 
   if (key.startsWith('border-image'))

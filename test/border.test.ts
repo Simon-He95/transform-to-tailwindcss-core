@@ -8,7 +8,7 @@ describe('border', () => {
   })
 
   it('border-bottom: #333;', () => {
-    expect(toTailwindcss('border-bottom: 1px solid var(--default, red);')).toBe('border-b-[1px] border-b-solid border-b-[var(--default,red)]')
+    expect(toTailwindcss('border-bottom: 1px solid var(--default, red);')).toBe('border-b-[1px] border-b-[var(--default,red)]')
   })
 })
 
