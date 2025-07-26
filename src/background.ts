@@ -1,4 +1,4 @@
-import { commaReplacer, getVal, isRgb, isSize, isVar, joinWithLine, joinWithUnderLine, linearGradientReg, linearGradientReg1, otherGradientReg, transformImportant } from './utils'
+import { commaReplacer, getVal, isSize, joinWithLine, joinWithUnderLine, linearGradientReg, linearGradientReg1, otherGradientReg, transformImportant } from './utils'
 
 const backgroundMap = [
   'background-color',
@@ -229,11 +229,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     from = from.replaceAll(commaReplacer, ',')
     const [fromColor, fromPosition] = from.split(' ')
     if (fromPosition) {
-      result += ` from-${isRgb(fromColor) || isVar(fromColor) ? `[${fromColor}]` : fromColor
-      } from-${fromPosition}`
+      result += ` from${getVal(fromColor)
+      } from${getVal(fromPosition)}`
     }
     else if (fromColor) {
-      result += ` from-${isRgb(fromColor) || isVar(fromColor) ? `[${fromColor}]` : fromColor}`
+      result += ` from${getVal(fromColor)}`
     }
   }
 
@@ -242,11 +242,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [viaColor, viaPosition] = via
       .split(' ')
     if (viaPosition) {
-      result += ` via-${isRgb(viaColor) || isVar(viaColor) ? `[${viaColor}]` : viaColor
-      } via-${viaPosition}`
+      result += ` via${getVal(viaColor)
+      } via${getVal(viaPosition)}`
     }
     else if (viaColor) {
-      result += ` via-${isRgb(viaColor) || isVar(viaColor) ? `[${viaColor}]` : viaColor}`
+      result += ` via${getVal(viaColor)}`
     }
   }
 
@@ -255,11 +255,11 @@ function getLinearGradientPosition(from: string, via: string, to: string) {
     const [toColor, toPosition] = to
       .split(' ')
     if (toPosition) {
-      result += ` to-${isRgb(toColor) || isVar(toColor) ? `[${toColor}]` : toColor
-      } to-${toPosition}`
+      result += ` to${getVal(toColor)
+      } to${getVal(toPosition)}`
     }
     else if (toColor) {
-      result += ` to-${isRgb(toColor) || isVar(toColor) ? `[${toColor}]` : toColor}`
+      result += ` to${getVal(toColor)}`
     }
   }
   return result

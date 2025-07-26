@@ -227,7 +227,7 @@ describe('background', () => {
       toTailwindcss(
         'background: linear-gradient(to bottom, #00ffff 0%, #0066ff 100%);',
       ),
-    ).toBe('bg-gradient-to-b from-#00ffff from-0% to-#0066ff to-100%')
+    ).toBe('bg-gradient-to-b from-[#00ffff] from-[0%] to-[#0066ff] to-[100%]')
   })
 
   it('background: linear-gradient(to bottom, #00ffff 0, #0ea5e9 ,#0066ff 100%);', () => {
@@ -236,7 +236,7 @@ describe('background', () => {
         'background: linear-gradient(to bottom, #00ffff 0, #0ea5e9 ,#0066ff 100%);',
       ),
     ).toBe(
-      'bg-gradient-to-b from-#00ffff from-0 via-#0ea5e9 to-#0066ff to-100%',
+      'bg-gradient-to-b from-[#00ffff] from-0 via-[#0ea5e9] to-[#0066ff] to-[100%]',
     )
   })
 
@@ -246,7 +246,7 @@ describe('background', () => {
         'background: linear-gradient(to bottom right, #00ffff 10% , #0ea5e9 20%,#0066ff 50%);',
       ),
     ).toBe(
-      'bg-gradient-to-br from-#00ffff from-10% via-#0ea5e9 via-20% to-#0066ff to-50%',
+      'bg-gradient-to-br from-[#00ffff] from-[10%] via-[#0ea5e9] via-[20%] to-[#0066ff] to-[50%]',
     )
   })
 
@@ -256,7 +256,7 @@ describe('background', () => {
         'background: linear-gradient(to bottom, #00ffff 0, #0ea5e9 30% ,#0066ff 100%);',
       ),
     ).toBe(
-      'bg-gradient-to-b from-#00ffff from-0 via-#0ea5e9 via-30% to-#0066ff to-100%',
+      'bg-gradient-to-b from-[#00ffff] from-0 via-[#0ea5e9] via-[30%] to-[#0066ff] to-[100%]',
     )
   })
 
@@ -266,7 +266,7 @@ describe('background', () => {
         'background: conic-gradient(#fff 0.25turn, #000 0.25turn 0.5turn, #fff 0.5turn 0.75turn);',
       ),
     ).toBe(
-      'bg-gradient-conic from-#fff from-0.25turn via-#000 via-0.25turn to-#fff to-0.5turn',
+      'bg-gradient-conic from-[#fff] from-[0.25turn] via-[#000] via-[0.25turn] to-[#fff] to-[0.5turn]',
     )
   })
 
@@ -361,5 +361,15 @@ describe('background', () => {
     ).toBe(
       'bg-[url(https://p9-semi-sign.byteimg.com/tos-cn-i-acvclvrq33/58555135a82b413da78fca29c1e857f9.PNG?rk3s=521bdb00&x-expires=1744871326&x-signature=Z92x16k%2FRqWT5yU%2Fxj2poYUMZyI%3D)]',
     )
+
+        expect(
+      toTailwindcss(
+        'background-image:linear-gradient(to right, #536989 11.22%, #23282F 98.88%);',
+      ),
+    ).toBe(
+      'bg-gradient-to-r from-[#536989] from-[11.22%] to-[#23282F] to-[98.88%]',
+    )
+
+    
   })
 })

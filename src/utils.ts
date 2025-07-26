@@ -49,6 +49,10 @@ export function isAttr(s: string) {
   return /^attr\(/i.test(s)
 }
 
+function isTurn(s: string) {
+  return s.endsWith('turn')
+}
+
 export function isRepeatingLinearGradient(s: string) {
   return /^repeating-linear-gradient\(/i.test(s)
 }
@@ -70,7 +74,7 @@ export function isFraction(s: string) {
 }
 
 export function isDynamic(val: string) {
-  return isFraction(val) || isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val)
+  return isFraction(val) || isUrl(val) || isColor(val) || cssMathFnRE.test(val) || numberWithUnitRE.test(val) || isGradient(val) || isVar(val) || isCalc(val) || isCubicBezier(val) || isAttr(val) || isRepeatingLinearGradient(val) || isRepeatingRadialGradient(val) || isConstant(val) || isEnv(val) || isTurn(val)
 }
 
 export function getVal(val: string | number, transform?: (v: string) => string, prefix = '', isDynamicFlag = false) {
