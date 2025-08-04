@@ -6,7 +6,7 @@ import {
   transformImportant,
 } from './utils'
 
-const lastMaps = ['flex-basis', 'flex-grow', 'flex-shrink']
+const lastMaps = ['flex-basis', 'flex-shrink']
 const flexMap = [
   'flex',
   'flex-grow',
@@ -21,6 +21,11 @@ export function flex(key: string, val: string) {
   const [value, important] = transformImportant(val)
   if (key === 'flex-shrink' && value === '1')
     return `${important}shrink`
+  if (key === 'flex-grow') {
+    if (value === '1')
+      return `${important}flex-grow`
+    return `${important}flex-grow-${value}`
+  }
   if (lastMaps.includes(key))
     return `${important}${getLastName(key)}${getVal(value)}`
   if (value === '1')
