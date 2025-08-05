@@ -22,7 +22,7 @@ describe('flex', () => {
     )
   })
 
-  it.only('flex-grow: 1;', () => {
+  it('flex-grow: 1;', () => {
     expect(toTailwindcss('flex-grow: 1;')).toBe('flex-grow')
   })
 
