@@ -28,6 +28,22 @@ describe('text', () => {
     expect(toTailwindcss('text-decoration-line: none;')).toBe('no-underline')
   })
 
+  it('text-decoration: underline;', () => {
+    expect(toTailwindcss('text-decoration: underline;')).toBe('underline')
+  })
+
+  it('text-decoration: line-through;', () => {
+    expect(toTailwindcss('text-decoration: line-through;')).toBe('line-through')
+  })
+
+  it('text-decoration: overline;', () => {
+    expect(toTailwindcss('text-decoration: overline !important;')).toBe('!overline')
+  })
+
+  it('text-decoration: underline overline;', () => {
+    expect(toTailwindcss('text-decoration: underline overline !important;')).toBe('!underline !overline')
+  })
+
   it('text-decoration-color: inherit;', () => {
     expect(toTailwindcss('text-decoration-color: inherit;')).toBe(
       'decoration-inherit',

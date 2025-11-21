@@ -2,7 +2,7 @@
   "name": "transform-to-tailwindcss-core",
   "type": "module",
   "version": "0.0.41",
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.23.0",
   "description": "🎨 A powerful, lightweight core library to transform CSS styles or style objects into Tailwind CSS utility classes. Perfect for migration projects and dynamic style generation.",
   "author": {
     "name": "Simon He",
@@ -86,16 +86,16 @@
     "clean": "rimraf dist"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.13.0",
-    "@types/node": "^18.19.98",
+    "@antfu/eslint-config": "^4.19.0",
+    "@types/node": "^18.19.130",
     "bumpp": "^8.2.1",
-    "eslint": "^9.26.0",
+    "eslint": "^9.39.1",
     "esno": "^0.16.3",
     "prettier": "^2.8.8",
     "rimraf": "^3.0.2",
     "tsdown": "^0.10.2",
     "tsx": "^3.14.0",
     "typescript": "^4.9.5",
-    "vitest": "^3.1.3"
+    "vitest": "^3.2.4"
   }
 }

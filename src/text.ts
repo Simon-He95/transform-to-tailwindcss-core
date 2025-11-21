@@ -3,6 +3,7 @@ import { getVal, positionMap, transformImportant } from './utils'
 const textMap = [
   'text-align',
   'text-align-last',
+  'text-decoration',
   'text-decoration-line',
   'text-decoration-style',
   'text-decoration-color',
@@ -31,6 +32,11 @@ export function text(key: string, val: string) {
       return `${important}normal-case`
     return `${important}${value}`
   }
+
+  if (key === 'text-decoration') {
+    return value.split(' ').map(v => v ? `${important}${v}` : '').join(' ')
+  }
+
   if (key.startsWith('text-decoration') || key === 'text-indent')
     return `${important}${key.split('-')[1]}${getVal(value)}`
 
