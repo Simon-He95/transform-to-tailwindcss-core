@@ -168,6 +168,14 @@ export function isVar(s: string) {
   return s.startsWith('var(--')
 }
 
+export function getCustomPropertyName(s: string) {
+  return s.match(/^var\((--[^),\s]+)\)$/)?.[1]
+}
+
+export function normalizeFraction(s: string) {
+  return s.replace(/\s*\/\s*/g, '/')
+}
+
 export function isSize(s: string) {
   return cssMathFnRE.test(s) || numberWithUnitRE.test(s) || positionMap.includes(s)
 }

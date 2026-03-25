@@ -1,4 +1,4 @@
-import { getFirstName, getVal, isCalc, isVar, transformImportant } from './utils'
+import { getCustomPropertyName, getFirstName, getVal, isCalc, isVar, normalizeFraction, transformImportant } from './utils'
 
 const maxMap = [
   'max-height',
@@ -10,14 +10,60 @@ const maxMap = [
   'min-block-size',
   'min-inline-size',
 ]
-export function max(key: string, val: string) {
+const prefixMap: Record<string, string> = {
+  'max-height': 'max-h',
+  'max-width': 'max-w',
+  'max-block-size': 'max-block',
+  'max-inline-size': 'max-inline',
+  'min-height': 'min-h',
+  'min-width': 'min-w',
+  'min-block-size': 'min-block',
+  'min-inline-size': 'min-inline',
+}
+
+export function max(key: string, val: string, isV4?: boolean) {
   if (!maxMap.includes(key))
     return
+  if (!isV4 && /(?:inline|block)-size$/.test(key))
+    return
   const [value, important] = transformImportant(val)
+  const prefix = prefixMap[key]
 
-  const all = key.split('-')
-  // calc value has '-'
-  // getFirstName causes the value to be lost
+  if (isV4) {
+    const customProperty = getCustomPropertyName(value)
+    if (customProperty)
+      return `${important}${prefix}-(${customProperty})`
+
+    const normalized = normalizeFraction(value)
+    if (/^\d+\/\d+$/.test(normalized))
+      return `${important}${prefix}-${normalized}`
+
+    const alias = getSizeAlias(key, value)
+    if (alias)
+      return `${important}${prefix}-${alias}`
+  }
+
   const attributeValue = (isCalc(value) || isVar(value)) ? getVal(value) : getVal(getFirstName(value))
-  return `${important}${all[0]}-${all[1][0]}${attributeValue}`
+  return `${important}${prefix}${attributeValue}`
+}
+
+function getSizeAlias(key: string, value: string) {
+  const viewportKey = /width|inline/.test(key) ? '100vw' : '100vh'
+  const map: Record<string, string> = {
+    'auto': 'auto',
+    '1px': 'px',
+    '100%': 'full',
+    [viewportKey]: 'screen',
+    '100dvw': 'dvw',
+    '100dvh': 'dvh',
+    '100lvw': 'lvw',
+    '100lvh': 'lvh',
+    '100svw': 'svw',
+    '100svh': 'svh',
+    'min-content': 'min',
+    'max-content': 'max',
+    'fit-content': 'fit',
+    'none': 'none',
+  }
+  return map[value]
 }

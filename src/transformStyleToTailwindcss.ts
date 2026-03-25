@@ -6,6 +6,7 @@ export function transformStyleToTailwindcss(
   styles: string,
   isRem?: boolean,
   debug?: boolean,
+  isV4?: boolean,
 ): [string, string[]] {
   const log = debug ? console.log : () => {}
 
@@ -15,7 +16,7 @@ export function transformStyleToTailwindcss(
   // 如果存在未能被转换的style应该返回并保持部分的style
   const noTransfer: string[] = []
   const cache = new Set()
-  const { newStyle, transformedResult } = transformStyleToTailwindPre(styles)
+  const { newStyle, transformedResult } = transformStyleToTailwindPre(styles, isV4)
 
   log('🔍 [DEBUG] After transformStyleToTailwindPre:', { newStyle, transformedResult })
 
@@ -33,7 +34,7 @@ export function transformStyleToTailwindcss(
         }
         cache.add(key)
 
-        const val = toTailwindcss(key, isRem) || ''
+        const val = toTailwindcss(key, isRem, isV4) || ''
         log('🔍 [DEBUG] Converted to Tailwind:', key, '->', val)
 
         if (!val) {
@@ -65,7 +66,7 @@ export function transformStyleToTailwindcss(
       }
       cache.add(key)
 
-      const val = toTailwindcss(key, isRem) || ''
+      const val = toTailwindcss(key, isRem, isV4) || ''
       log('🔍 [DEBUG] Converted to Tailwind:', key, '->', val)
 
       if (!val) {

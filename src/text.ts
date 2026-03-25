@@ -1,4 +1,4 @@
-import { getVal, positionMap, transformImportant } from './utils'
+import { getCustomPropertyName, getVal, joinWithUnderLine, positionMap, transformImportant } from './utils'
 
 const textMap = [
   'text-align',
@@ -16,7 +16,7 @@ const textMap = [
   'text-justify',
   'text-shadow',
 ]
-export function text(key: string, val: string) {
+export function text(key: string, val: string, isV4?: boolean) {
   if (!textMap.includes(key))
     return
   const [value, important] = transformImportant(val)
@@ -35,6 +35,17 @@ export function text(key: string, val: string) {
 
   if (key === 'text-decoration') {
     return value.split(' ').map(v => v ? `${important}${v}` : '').join(' ')
+  }
+
+  if (key === 'text-shadow') {
+    if (!isV4)
+      return `${important}text${getVal(value)}`
+    if (value === 'none')
+      return `${important}text-shadow-none`
+    const customProperty = getCustomPropertyName(value)
+    if (customProperty)
+      return `${important}text-shadow-(${customProperty})`
+    return `${important}text-shadow-[${joinWithUnderLine(value)}]`
   }
 
   if (key.startsWith('text-decoration') || key === 'text-indent')
