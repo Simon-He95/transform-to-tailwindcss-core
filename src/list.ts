@@ -22,9 +22,9 @@ export function list(key: string, val: string) {
   const [value, important] = transformImportant(val)
   if (key === 'list-style-image') {
     if (value === 'none') {
-      return `${important}${getFirstName(key)}-none`
+      return `${important}list-image-none`
     }
-    return `${important}${getFirstName(key)}${getVal(value)}`
+    return `${important}list-image${getVal(value)}`
   }
   return `${important}${getFirstName(key)}${getVal(value)}`
 }

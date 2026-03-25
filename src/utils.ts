@@ -176,7 +176,7 @@ export function isColor(s: string) {
   return isHex(s) || isRgb(s) || isHsl(s)
 }
 
-export const browserReg = /-webkit-|-moz-|-ms-|-o-/g
+export const browserReg = /-webkit-|-moz-osx-|-moz-|-ms-|-o-/g
 
 export const linearGradientReg
   = /linear-gradient\(\s*to([\w\s]+),?([\-\w()#%\s.]+)?,([\-\w()#%\s.]+)?,?([\-\w#%\s.]+)?\)$/

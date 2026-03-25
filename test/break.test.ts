@@ -2,6 +2,10 @@ import { describe, expect, it } from 'vitest'
 import { toTailwindcss } from '../src/toTailwindcss'
 
 describe('break', () => {
+  it('break-after: column;', () => {
+    expect(toTailwindcss('break-after: column;')).toBe('break-after-column')
+  })
+
   it('break-inside: auto;', () => {
     expect(toTailwindcss('break-inside: auto;')).toBe('break-inside-auto')
   })

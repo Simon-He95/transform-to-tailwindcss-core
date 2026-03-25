@@ -15,6 +15,16 @@ describe('font-size', () => {
   })
 })
 
+describe('font-smoothing', () => {
+  it('-webkit-font-smoothing: antialiased;', () => {
+    expect(toTailwindcss('-webkit-font-smoothing: antialiased;')).toBe('antialiased')
+  })
+
+  it('-moz-osx-font-smoothing: auto;', () => {
+    expect(toTailwindcss('-moz-osx-font-smoothing: auto;')).toBe('subpixel-antialiased')
+  })
+})
+
 describe('font', () => {
   it('rem', () => {
     expect(toTailwindcss('font: bold 16px/20px;')).toBe(
