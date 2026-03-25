@@ -8,6 +8,7 @@ const floatMap = [
   'order',
   'perspective',
   'columns',
+  'break-after',
   'break-inside',
   'break-before',
 ]

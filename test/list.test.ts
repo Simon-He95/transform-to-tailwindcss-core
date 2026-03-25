@@ -2,6 +2,16 @@ import { describe, expect, it } from 'vitest'
 import { toTailwindcss } from '../src/toTailwindcss'
 
 describe('list', () => {
+  it('list-style-image: none;', () => {
+    expect(toTailwindcss('list-style-image: none;')).toBe('list-image-none')
+  })
+
+  it('list-style-image: url("/icon.svg");', () => {
+    expect(toTailwindcss('list-style-image: url("/icon.svg");')).toBe(
+      'list-image-[url(/icon.svg)]',
+    )
+  })
+
   it('list-style-type: unset;', () => {
     expect(toTailwindcss('list-style-type: unset;')).toMatchInlineSnapshot(
       '"list-unset"',

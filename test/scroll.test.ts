@@ -18,12 +18,24 @@ describe('scroll', () => {
     expect(toTailwindcss('scroll-margin-top: 0px;')).toBe('scroll-mt-[0px]')
   })
 
+  it('scroll-margin-inline-end: 0px;', () => {
+    expect(toTailwindcss('scroll-margin-inline-end: 0px;')).toBe(
+      'scroll-me-[0px]',
+    )
+  })
+
   it('scroll-padding: 0px;', () => {
     expect(toTailwindcss('scroll-padding: 0px;')).toBe('scroll-p-[0px]')
   })
 
   it('scroll-padding-top: 0px;', () => {
     expect(toTailwindcss('scroll-padding-top: 0px;')).toBe('scroll-pt-[0px]')
+  })
+
+  it('scroll-padding-inline-start: 0px;', () => {
+    expect(toTailwindcss('scroll-padding-inline-start: 0px;')).toBe(
+      'scroll-ps-[0px]',
+    )
   })
 
   it('scroll-snap-align: start;', () => {

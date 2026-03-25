@@ -48,6 +48,10 @@ describe('grid', () => {
     expect(toTailwindcss('grid-row-start: 1;')).toBe('row-start-1')
   })
 
+  it('grid-row-end: auto;', () => {
+    expect(toTailwindcss('grid-row-end: auto;')).toBe('row-end-auto')
+  })
+
   it('grid-auto-flow: row;', () => {
     expect(toTailwindcss('grid-auto-flow: row;')).toBe('grid-flow-row')
   })

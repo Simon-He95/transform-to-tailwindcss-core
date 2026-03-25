@@ -53,6 +53,51 @@ describe('transformStyleToTailwindcss', () => {
     ).toBe('truncate')
   })
 
+  it('font smoothing presets', () => {
+    expect(
+      transformStyleToTailwindcss(
+        `-webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;`,
+      )[0],
+    ).toBe('antialiased')
+
+    expect(
+      transformStyleToTailwindcss(
+        `-webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;`,
+      )[0],
+    ).toBe('subpixel-antialiased')
+  })
+
+  it('screen reader presets', () => {
+    expect(
+      transformStyleToTailwindcss(
+        `position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;`,
+      )[0],
+    ).toBe('sr-only')
+
+    expect(
+      transformStyleToTailwindcss(
+        `position: static;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;`,
+      )[0],
+    ).toBe('not-sr-only')
+  })
+
   it('transformStyleToTailwindcss', () => {
     expect(
       transformStyleToTailwindcss(

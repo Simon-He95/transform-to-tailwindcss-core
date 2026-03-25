@@ -51,16 +51,15 @@ jobs:
 
     strategy:
       matrix:
-        node: [14.x, 20.x]
         os: [ubuntu-latest, windows-latest, macos-latest]
       fail-fast: false
 
     steps:
       - uses: actions/checkout@v3
-      - name: Set node ${{ matrix.node }}
+      - name: Set node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 20.x
 
       - name: Setup
         run: npm i -g @antfu/ni

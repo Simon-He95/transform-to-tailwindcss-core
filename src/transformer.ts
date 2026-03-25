@@ -90,6 +90,22 @@ function createRuleProcessor(config: {
 }
 
 const transformer: Record<string, (v: Record<string, string>) => { transformedResult: string, deleteKeys: string[] }> = {
+  'antialiased': createRuleProcessor({
+    allMatch: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+    },
+    outputTemplate: () => 'antialiased',
+  }),
+
+  'subpixel-antialiased': createRuleProcessor({
+    allMatch: {
+      '-webkit-font-smoothing': 'auto',
+      '-moz-osx-font-smoothing': 'auto',
+    },
+    outputTemplate: () => 'subpixel-antialiased',
+  }),
+
   // eslint-disable-next-line no-template-curly-in-string
   'line-clamp-${number}': createRuleProcessor({
     allMatch: {
@@ -128,6 +144,35 @@ const transformer: Record<string, (v: Record<string, string>) => { transformedRe
     },
     // 纯 allMatch 规则，不需要 anyMatch 和 priority
     outputTemplate: () => 'truncate',
+  }),
+
+  'sr-only': createRuleProcessor({
+    allMatch: {
+      'position': 'absolute',
+      'width': /^1px$/,
+      'height': /^1px$/,
+      'padding': /^0(?:px)?$/,
+      'margin': /^-1px$/,
+      'overflow': 'hidden',
+      'clip': /^rect\(0(?:px)?(?:,\s*|\s+)0(?:px)?(?:,\s*|\s+)0(?:px)?(?:,\s*|\s+)0(?:px)?\)$/,
+      'white-space': 'nowrap',
+      'border-width': /^0(?:px)?$/,
+    },
+    outputTemplate: () => 'sr-only',
+  }),
+
+  'not-sr-only': createRuleProcessor({
+    allMatch: {
+      'position': 'static',
+      'width': 'auto',
+      'height': 'auto',
+      'padding': /^0(?:px)?$/,
+      'margin': /^0(?:px)?$/,
+      'overflow': 'visible',
+      'clip': 'auto',
+      'white-space': 'normal',
+    },
+    outputTemplate: () => 'not-sr-only',
   }),
 
   // 您可以轻松添加更多规则
