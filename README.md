@@ -16,6 +16,7 @@
 - 🪶 **Lightweight**: Zero dependencies, optimized for performance
 - 🌐 **Browser Compatible**: Works in both Node.js and browser environments
 - 🐛 **Debug Mode**: Built-in debugging for troubleshooting conversions
+- 🆕 **Tailwind v4 Mode**: Optional canonical output for current Tailwind docs utility syntax
 
 ## 📦 Installation
 
@@ -33,14 +34,14 @@ pnpm add transform-to-tailwindcss-core
 ## 🚀 Quick Start
 
 ```typescript
-import { transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
+import { toTailwindcss, transformStyleToTailwindcss } from 'transform-to-tailwindcss-core'
 
 // Basic usage
 const [tailwindClasses, unconverted] = transformStyleToTailwindcss(
   'color: red; font-size: 16px; margin: 10px'
 )
 
-console.log(tailwindClasses) // "text-red-500 text-base m-2.5"
+console.log(tailwindClasses) // "text-[red] text-[16px] m-[10px]"
 console.log(unconverted) // [] (empty if all styles converted)
 
 // With rem units
@@ -55,11 +56,16 @@ const [classes, unconverted] = transformStyleToTailwindcss(
   false, // rem conversion
   true // debug mode - shows conversion process
 )
+
+// Tailwind v4 canonical output
+console.log(toTailwindcss('aspect-ratio: 1 / 1;', false, true)) // "aspect-square"
+console.log(toTailwindcss('width: 100%;', false, true)) // "w-full"
+console.log(toTailwindcss('rotate: 45deg;', false, true)) // "rotate-45"
 ```
 
 ## 📖 API Reference
 
-### `transformStyleToTailwindcss(styles, isRem?, debug?)`
+### `transformStyleToTailwindcss(styles, isRem?, debug?, isV4?)`
 
 Converts CSS styles to Tailwind CSS utility classes.
 
@@ -68,12 +74,48 @@ Converts CSS styles to Tailwind CSS utility classes.
 - `styles` (string): CSS styles to convert (e.g., "color: red; font-size: 16px")
 - `isRem` (boolean, optional): Whether to convert pixel values to rem units
 - `debug` (boolean, optional): Enable debug logging to see conversion process
+- `isV4` (boolean, optional): Prefer Tailwind v4 canonical utility output for supported property pages
 
 #### Returns
 
 Returns a tuple `[string, string[]]`:
 - First element: Converted Tailwind CSS classes as a string
 - Second element: Array of unconverted CSS styles
+
+### `toTailwindcss(css, isRem?, isV4?)`
+
+Converts a single CSS declaration to a Tailwind utility string.
+
+#### Parameters
+
+- `css` (string): A single CSS declaration (e.g. `"aspect-ratio: 1 / 1;"`)
+- `isRem` (boolean, optional): Whether to convert pixel values to rem units
+- `isV4` (boolean, optional): Prefer Tailwind v4 canonical utility output for supported property pages
+
+#### Examples
+
+```typescript
+toTailwindcss('aspect-ratio: 1 / 1;') // "aspect-[1/1]"
+toTailwindcss('aspect-ratio: 1 / 1;', false, true) // "aspect-square"
+
+toTailwindcss('line-clamp: 3;', false, true) // "line-clamp-3"
+toTailwindcss('color-scheme: light dark;', false, true) // "scheme-light-dark"
+```
+
+### Tailwind v4 Mode
+
+`isV4` is opt-in so existing integrations keep the current output by default.
+
+When `isV4` is `true`, the converter prefers current Tailwind documentation syntax for supported utilities, for example:
+
+```typescript
+toTailwindcss('aspect-ratio: var(--aspect-video);', false, true) // "aspect-video"
+toTailwindcss('inline-size: 100%;', false, true) // "inline-full"
+toTailwindcss('block-size: 100vh;', false, true) // "block-screen"
+toTailwindcss('font-stretch: condensed;', false, true) // "font-stretch-condensed"
+toTailwindcss('text-shadow: none;', false, true) // "text-shadow-none"
+toTailwindcss('translate: 100% 100%;', false, true) // "translate-full"
+```
 
 ## 🎯 Supported CSS Properties
 
@@ -89,6 +131,8 @@ This library supports a wide range of CSS properties including:
 - **Borders**: `border`, `border-width`, `border-radius`
 - **Effects**: `box-shadow`, `opacity`, `transform`
 - **And many more...**
+
+Tailwind v4 mode also covers current property-page syntax across the Tailwind docs categories such as Layout, Flexbox & Grid, Sizing, Typography, Backgrounds, Borders, Effects, Filters, Tables, Transitions & Animation, Transforms, Interactivity, SVG, and Accessibility.
 
 ## 🔧 Advanced Usage
 

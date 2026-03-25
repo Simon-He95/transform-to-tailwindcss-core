@@ -1,3 +1,5 @@
+import { getCustomPropertyName, getVal } from './utils'
+
 // 找到第一个不在方括号内的冒号位置
 function findFirstColonOutsideBrackets(str: string): number {
   let bracketDepth = 0
@@ -21,9 +23,9 @@ function createRuleProcessor(config: {
   allMatch: Record<string, string | RegExp>
   anyMatch?: Array<{ key: string, pattern: RegExp | string }>
   priority?: string[]
-  outputTemplate: string | ((value: string) => string)
+  outputTemplate: string | ((value: string, isV4?: boolean) => string)
 }) {
-  return (v: Record<string, string>): { transformedResult: string, deleteKeys: string[] } => {
+  return (v: Record<string, string>, isV4?: boolean): { transformedResult: string, deleteKeys: string[] } => {
     // 规范化配置，确保所有字段都存在
     const anyMatch = config.anyMatch || []
     const priority = config.priority || []
@@ -78,7 +80,7 @@ function createRuleProcessor(config: {
 
     // 生成输出结果
     const transformedResult = typeof config.outputTemplate === 'function'
-      ? config.outputTemplate(valueToUse)
+      ? config.outputTemplate(valueToUse, isV4)
       // eslint-disable-next-line no-template-curly-in-string
       : config.outputTemplate.replace('${value}', valueToUse)
 
@@ -89,7 +91,7 @@ function createRuleProcessor(config: {
   }
 }
 
-const transformer: Record<string, (v: Record<string, string>) => { transformedResult: string, deleteKeys: string[] }> = {
+const transformer: Record<string, (v: Record<string, string>, isV4?: boolean) => { transformedResult: string, deleteKeys: string[] }> = {
   'antialiased': createRuleProcessor({
     allMatch: {
       '-webkit-font-smoothing': 'antialiased',
@@ -114,11 +116,31 @@ const transformer: Record<string, (v: Record<string, string>) => { transformedRe
       '-webkit-box-orient': 'vertical',
     },
     anyMatch: [
-      { key: '-webkit-line-clamp', pattern: /\d/ },
-      { key: 'line-clamp', pattern: /\d/ },
+      { key: '-webkit-line-clamp', pattern: /^\d+$/ },
+      { key: 'line-clamp', pattern: /^\d+$/ },
     ],
     priority: ['line-clamp', '-webkit-line-clamp'],
     outputTemplate: value => `line-clamp-${value}`,
+  }),
+
+  // eslint-disable-next-line no-template-curly-in-string
+  'line-clamp-${custom}': createRuleProcessor({
+    allMatch: {
+      'overflow': 'hidden',
+      'display': '-webkit-box',
+      '-webkit-box-orient': 'vertical',
+    },
+    anyMatch: [
+      { key: '-webkit-line-clamp', pattern: /^var\(--/ },
+      { key: 'line-clamp', pattern: /^var\(--/ },
+    ],
+    priority: ['line-clamp', '-webkit-line-clamp'],
+    outputTemplate: (value, isV4) => {
+      const customProperty = getCustomPropertyName(value)
+      if (isV4 && customProperty)
+        return `line-clamp-(${customProperty})`
+      return `line-clamp${getVal(value)}`
+    },
   }),
 
   // eslint-disable-next-line no-template-curly-in-string
@@ -180,7 +202,7 @@ const transformer: Record<string, (v: Record<string, string>) => { transformedRe
 }
 
 // 提前转换一些组合的预设，比如 line-clamp-xxx
-export function transformStyleToTailwindPre(styles: string) {
+export function transformStyleToTailwindPre(styles: string, isV4?: boolean) {
   const preTransformedList = []
   // 需要一次性把所有的key和value都给transformer中处理，完全匹配返回新的结果，并且把使用到的属性从原来的结果中删除
   const styleToObj = styles.split(';').filter(Boolean).reduce((r: Record<string, string>, item) => {
@@ -199,7 +221,7 @@ export function transformStyleToTailwindPre(styles: string) {
   }, {})
 
   for (const key in transformer) {
-    const { transformedResult, deleteKeys } = transformer[key](styleToObj)
+    const { transformedResult, deleteKeys } = transformer[key](styleToObj, isV4)
     if (transformedResult && deleteKeys.length) {
       preTransformedList.push(transformedResult)
       // 删除已经转换的属性

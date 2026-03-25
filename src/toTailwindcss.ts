@@ -85,11 +85,13 @@ const typeMap: any = {
   align,
   place,
   padding: transformMargin,
-  perspective: float,
+  perspective: transform,
   margin: transformMargin,
+  inline: size,
   width: size,
   min: max,
   max,
+  block: size,
   height: size,
   font,
   letter,
@@ -110,6 +112,10 @@ const typeMap: any = {
   table: list,
   transition,
   transform,
+  rotate: transform,
+  scale: transform,
+  skew: transform,
+  translate: transform,
   accent: list,
   appearance: list,
   cursor,
@@ -127,14 +133,14 @@ const typeMap: any = {
 }
 const splitReg = /([\w-]+)\s*:\s*([^;]+)/
 
-export function toTailwindcss(css: string, isRem?: boolean) {
+export function toTailwindcss(css: string, isRem?: boolean, isV4?: boolean) {
   css = css.replace(browserReg, '')
   const match = css.match(splitReg)
   if (!match)
     return
   const [_, key, val] = match
   const first = getFirstName(key)
-  const result = typeMap[first]?.(key, val)
+  const result = typeMap[first]?.(key, val, isV4)
   if (result && isRem) {
     return result.replace(
       /-\[([0-9.]+)px\]/g,
